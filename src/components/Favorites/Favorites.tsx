@@ -1,6 +1,6 @@
 export const Favorites = () => {
     return (
-        <li><a href="#">Favorites</a></li>
+        <h1>Favorites</h1>
     );
 };
 
