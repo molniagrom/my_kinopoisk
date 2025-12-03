@@ -1,6 +1,6 @@
 export const CategoryMovies = () => {
     return (
-        <li><a href="#">Category Movies</a></li>
+        <h1>Category Movies</h1>
     );
 };
 

@@ -1,6 +1,6 @@
 export const Search = () => {
     return (
-        <li><a href="#">Search</a></li>
+        <h1>Search</h1>
     );
 };
 
