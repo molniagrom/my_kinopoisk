@@ -10,6 +10,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MyAvatar from '../MyAvatar/MyAvatar';
 import s from './Header.module.css';
+import { useState } from "react";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const navLinks = [
     { label: 'Main', path: Path.Main },
@@ -20,9 +23,20 @@ const navLinks = [
 ];
 
 export const Header = () => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+
+    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
         <AppBar className={s.header} position="static">
-            <Toolbar className={s.toolbar}>
+            <Toolbar sx={{ justifyContent: 'space-between' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     <Box
                         component="img"
@@ -31,40 +45,87 @@ export const Header = () => {
                         sx={{
                             height: 40,
                             mr: 3,
-                            display: 'flex',
-                            alignItems: 'center'
                         }}
                     />
-                    {navLinks.map((link) => (
-                        <Button
-                            key={link.path}
-                            color="inherit"
-                            component={Link}
-                            to={link.path}
-                            sx={{
-                                transition: 'all 0.3s ease',
-                                '&:hover': {
-                                    color: '#c8e6c9',
-                                    transform: 'scale(1.05)'
-                                }
-                            }}
-                        >
-                            {link.label}
-                        </Button>
-                    ))}
+                    <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+                        {navLinks.map((link) => (
+                            <Button
+                                key={link.path}
+                                color="inherit"
+                                component={Link}
+                                to={link.path}
+                                sx={{
+                                    transition: 'all 0.3s ease',
+                                    '&:hover': {
+                                        color: '#c8e6c9',
+                                        transform: 'scale(1.05)'
+                                    }
+                                }}
+                            >
+                                {link.label}
+                            </Button>
+                        ))}
+                    </Box>
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
                     <AddCircleIcon sx={{ fontSize: 40 }} />
                     <MyAvatar src="https://i.pravatar.cc/150?img=3" alt="User Avatar" size={40} />
                     <Button color="success" variant="contained">log out</Button>
                     <SearchIcon sx={{ fontSize: 30, cursor: 'pointer' }} />
                     <NotificationsIcon sx={{ fontSize: 30, cursor: 'pointer' }} />
                 </Box>
+                <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                    <IconButton
+                        size="large"
+                        edge="end"
+                        color="inherit"
+                        aria-label="menu"
+                        onClick={handleMenu}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        open={open}
+                        onClose={handleClose}
+                        sx={{ mt: '40px' }}
+                    >
+                        {navLinks.map((link) => (
+                            <MenuItem key={link.path} onClick={handleClose} component={Link} to={link.path}>
+                                {link.label}
+                            </MenuItem>
+                        ))}
+                        <MenuItem onClick={handleClose}>
+                            <AddCircleIcon sx={{ mr: 1 }} /> Add
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                            <SearchIcon sx={{ mr: 1 }} /> Search
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                            <NotificationsIcon sx={{ mr: 1 }} /> Notifications
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                            <MyAvatar src="https://i.pravatar.cc/150?img=3" alt="User Avatar" size={24} />
+                            <span style={{ marginLeft: '8px' }}>Profile</span>
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                            <Button color="success" variant="contained" size="small" fullWidth>log out</Button>
+                        </MenuItem>
+                    </Menu>
+                </Box>
             </Toolbar>
         </AppBar>
     );
 };
-
-// add routing-header in project
 
 export default Header;
