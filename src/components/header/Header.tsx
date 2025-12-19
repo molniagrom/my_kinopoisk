@@ -36,7 +36,7 @@ export const Header = () => {
 
     return (
         <AppBar className={s.header} position="static">
-            <Toolbar sx={{ justifyContent: 'space-between' }}>
+            <Toolbar className={s.toolbar}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     <Box
                         component="img"
