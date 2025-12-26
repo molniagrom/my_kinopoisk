@@ -9,7 +9,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MyAvatar from '../MyAvatar/MyAvatar';
-import s from './Header.module.css';
+import s from './header.module.css';
 import { useState } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
