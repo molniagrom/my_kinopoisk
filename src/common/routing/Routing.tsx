@@ -1,11 +1,10 @@
-import { Main } from "../../components/Main/Main"
+import Search from "@mui/icons-material/Search"
+import CategoryMovies from "../components/CategoryMovies/CategoryMovies.tsx"
+import FilteredMovies from "../components/FilteredMovies/FilteredMovies.tsx"
+import { Main } from "../components/Main/Main.tsx"
 import { Routes, Route } from "react-router-dom"
-import CategoryMovies from "../../components/CategoryMovies/CategoryMovies"
-import FilteredMovies from "../../components/FilteredMovies/FilteredMovies"
-import Search from "../../components/Search/Search"
-import Favorites from "../../components/Favorites/Favorites"
-import { PageNotFound } from "../../components/PageNotFound/PageNotFound"
-
+import Favorites from "../components/Favorites/Favorites.tsx";
+import {PageNotFound} from "../components/PageNotFound/PageNotFound.tsx";
 
 export const Path = {
   Main: "/",

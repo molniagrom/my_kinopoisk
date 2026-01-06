@@ -1,6 +1,6 @@
 import './App.css'
-import Header from "./components/header/Header.tsx";
 import { Routing } from "./common/routing/Routing.tsx";
+import Header from "./common/components/header/Header.tsx";
 
 function App() {
 

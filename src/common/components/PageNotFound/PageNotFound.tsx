@@ -1,8 +1,8 @@
-import { Path } from "../../common/routing/Routing"
 import Button from "@mui/material/Button"
 import Container from "@mui/material/Container"
 import { Link } from "react-router-dom"
 import styles from "./PageNotFound.module.css"
+import { Path } from "../../routing/Routing"
 
 export const PageNotFound = () => (
   <Container sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
