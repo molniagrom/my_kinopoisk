@@ -16,7 +16,7 @@ export const Trending = () => {
 
     return (
         <div className={s.trending}>
-            <h2>Популярные фильмы</h2>
+            <h2>Popular Movies</h2>
             <FilmSlider>
                 {data.results
                     .filter(movie => movie.poster_path !== null)
@@ -26,7 +26,7 @@ export const Trending = () => {
                             title={movie.original_title}
                             releaseDate={movie.release_date}
                             voteAverage={movie.vote_average}
-                            posterPath={movie.poster_path}
+                            posterPath={movie.poster_path as string}
                         />
                     ))}
             </FilmSlider>
