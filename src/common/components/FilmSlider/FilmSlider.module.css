@@ -1,0 +1,70 @@
+.wrapper {
+    position: relative;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.items {
+    display: flex;
+    gap: 20px;
+    padding: 0 10px; /* Add some padding so items aren't flush with the edge */
+
+    /* Core scrolling setup */
+    overflow-x: scroll;
+    scroll-behavior: smooth; /* Makes button clicks smooth */
+
+    /* Drag-to-scroll setup */
+    cursor: grab;
+    user-select: none;
+
+    /* Hide scrollbar */
+    scrollbar-width: none; /* For Firefox */
+}
+
+.items::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+/* This is the key fix for item width */
+.items > * {
+    flex-shrink: 0;
+    width: 220px; /* Adjust this width as needed for your Film cards */
+}
+
+
+.items.active {
+    cursor: grabbing;
+}
+
+.navButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    background-color: rgba(23, 23, 23, 0.6);
+    color: white;
+    border: 1px solid white;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.navButton:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.btnPrev {
+    left: -10px;
+}
+
+.btnNext {
+    right: -10px;
+}

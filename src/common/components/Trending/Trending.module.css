@@ -1,0 +1,42 @@
+.trending{
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+/*
+  Переопределяем стили для дочерних элементов ReactCardSlider.
+  Мы "оборачиваем" глобальные селекторы в класс нашего компонента,
+  чтобы эти стили применялись только к слайдерам внутри .trending
+*/
+.trending :global(.slider-card-title) {
+    color: #1f1f1f; /* Задаем темный цвет для заголовка */
+    font-weight: 600;
+}
+
+.trending :global(.slider-card-description) {
+    color: #555; /* Задаем серый цвет для описания */
+}
+
+/*
+  Делаем карточки прямоугольными, как постеры
+*/
+.trending :global(.slider-card) {
+    /* Задаем соотношение сторон 2 к 3 (ширина к высоте) */
+    aspect-ratio: 2 / 3;
+    /* Устанавливаем высоту автоматически на основе ширины и aspect-ratio */
+    height: 100%;
+    width: 220px; /* Можете подобрать ширину по своему вкусу */
+}
+
+.trending :global(.main-slider-container) {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+.trending :global(#slider) {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+}

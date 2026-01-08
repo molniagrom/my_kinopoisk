@@ -1,26 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import {handleError} from "../../common/utils";
-import {AUTH_TOKEN} from "../../common/constants";
 
 export const baseApi = createApi({
     reducerPath: "filmsApi",
     // tagTypes: [],
     refetchOnReconnect: true,
-    baseQuery: async (args, api, extraOptions) => {
-        const result = await fetchBaseQuery({
-            baseUrl: import.meta.env.VITE_BASE_URL,
-            credentials: 'include',
-            headers: {
-                'API-KEY': import.meta.env.VITE_API_KEY,
-            },
-            prepareHeaders: (headers) => {
-                headers.set("Authorization", `Bearer ${localStorage.getItem(AUTH_TOKEN)}`)
-            },
-        })(args, api, extraOptions)
-
-        handleError(api, result)
-
-        return result
-    },
+    baseQuery: fetchBaseQuery({
+        baseUrl: import.meta.env.VITE_BASE_URL,
+        prepareHeaders: (headers) => {
+            // VITE_ACCESS_TOKEN должен содержать ваш токен доступа (v4 auth), а не API ключ.
+            const token = import.meta.env.VITE_API_READ_ACCESS_TOKEN;
+            headers.set("Authorization", `Bearer ${token}`)
+        },
+    }),
     endpoints: () => ({}),
 })
