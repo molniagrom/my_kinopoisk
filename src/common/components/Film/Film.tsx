@@ -27,7 +27,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ title, releaseDate, voteAverage, 
                     alt={title}
                     className={styles.poster}
                 />
-                <button className={styles.menuButton}>•••</button>
+                <button className={styles.menuButton}>❤</button>
 
                 {/* Круговой индикатор рейтинга */}
                 <div className={styles.ratingBadge}>

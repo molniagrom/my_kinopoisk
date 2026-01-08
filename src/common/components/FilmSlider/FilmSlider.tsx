@@ -1,4 +1,5 @@
-import React, { useState, useRef, ReactNode, FC } from 'react';
+import React, { useState, useRef } from 'react';
+import type { ReactNode, FC } from 'react';
 import s from './FilmSlider.module.css';
 
 interface FilmSliderProps {

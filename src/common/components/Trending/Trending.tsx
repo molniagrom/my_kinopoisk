@@ -2,6 +2,7 @@ import { useGetPopularMoviesQuery } from "../../../features/films/moviesApi.ts";
 import Film from "../Film/Film.tsx";
 import s from "./Trending.module.css";
 import { FilmSlider } from "../FilmSlider/FilmSlider.tsx";
+import Button from '@mui/material/Button';
 
 export const Trending = () => {
     const { data, isLoading, isError } = useGetPopularMoviesQuery({ region: "MD", page: 1, language: "ru-RU" });
@@ -30,6 +31,7 @@ export const Trending = () => {
                         />
                     ))}
             </FilmSlider>
+            <Button>View More</Button>
         </div>
     );
 };
