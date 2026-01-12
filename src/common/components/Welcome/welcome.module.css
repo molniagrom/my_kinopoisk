@@ -4,15 +4,16 @@
 
 .welcome {
     background-image: linear-gradient(
-            rgba(0, 0, 0, 0.3),
-            rgba(0, 0, 0, 0.3)
+            rgba(0, 0, 0, 0.4),
+            rgba(0, 0, 0, 0.4)
     ),
     url("https://picsum.photos/1920/1080");
     width: 100%;
-    height: 70vh;
+    /*height: 70vh;*/
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 180px 0;
 }
 
 .hero__search {
@@ -30,4 +31,37 @@
     flex-direction: column;
     align-items: center;
     padding: 30px 40px;
+}
+
+.autocomplete {
+    width: 300px;
+}
+
+.autocomplete :global .MuiAutocomplete-popupIndicator,
+.autocomplete :global .MuiAutocomplete-clearIndicator {
+    color: white;
+}
+
+.textField :global .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+.textField :global .MuiOutlinedInput-input {
+    color: white;
+}
+
+.textField :global .MuiInputLabel-outlined {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.textField:hover :global .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline,
+.textField:hover :global .MuiInputLabel-outlined {
+    border-color: white;
+    color: white;
+}
+
+.textField :global .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+.textField :global .MuiInputLabel-outlined.Mui-focused {
+    border-color: white;
+    color: white;
 }
