@@ -1,9 +1,78 @@
+import {useEffect, useState} from "react";
+import {useLazyGetPopularMoviesQuery} from "../../../features/films/moviesApi.ts";
+import Film from "../Film/Film.tsx";
+import Button from "@mui/material/Button";
+import s from "./categoryMovies.module.css"
+import type {Movie} from "../../../features/films/filmsApi.types.ts";
+
+// Константа для количества отображаемых фильмов за раз
+const MOVIES_TO_SHOW = 6;
+
 export const CategoryMovies = () => {
+    // Состояние для хранения всех загруженных фильмов
+    const [allMovies, setAllMovies] = useState<Movie[]>([]);
+    // Состояние для отслеживания количества видимых фильмов
+    const [visibleCount, setVisibleCount] = useState(MOVIES_TO_SHOW);
+    // Состояние для номера страницы, запрашиваемой у API
+    const [apiPage, setApiPage] = useState(1);
+
+    const [fetchMovies, { data, isFetching }] =
+        useLazyGetPopularMoviesQuery();
+
+    // Загружаем первую страницу фильмов при монтировании компонента
+    useEffect(() => {
+        fetchMovies({ page: apiPage });
+    }, [apiPage, fetchMovies]);
+
+    // Когда приходят новые данные от API, добавляем их в общий список
+    useEffect(() => {
+        if (data?.results) {
+            // Добавляем только те фильмы, которых еще нет в списке
+            setAllMovies(prevMovies => {
+                const newMovies = data.results.filter(
+                    newMovie => !prevMovies.some(prevMovie => prevMovie.id === newMovie.id)
+                );
+                return [...prevMovies, ...newMovies];
+            });
+        }
+    }, [data]);
+
+    const onClickHandler = () => {
+        const newVisibleCount = visibleCount + (MOVIES_TO_SHOW * 2);
+
+        // Если для показа следующих 5 фильмов не хватает данных, и загрузка не идет,
+        // запрашиваем следующую страницу у API
+        if (newVisibleCount > allMovies.length && !isFetching) {
+            setApiPage(prevPage => prevPage + 1);
+        }
+
+        setVisibleCount(newVisibleCount);
+    }
+
     return (
-        <>
-            <h1>Category Movies</h1>
-        </>
+        <div className={s.categoryMovies}>
+            <h1>Popular Movies</h1>
+            <div className={s.popularMovies}>
+                {allMovies
+                    .slice(0, visibleCount) // Показываем только часть фильмов
+                    .filter(movie => movie.poster_path !== null)
+                    .map((movie) => (
+                        <Film
+                            key={movie.id}
+                            title={movie.original_title}
+                            releaseDate={movie.release_date}
+                            voteAverage={movie.vote_average}
+                            posterPath={movie.poster_path as string}
+                        />
+                    ))}
+                {/* Показываем кнопку, только если есть еще фильмы для отображения */}
+                {visibleCount < (data?.total_results || 0) && (
+                    <Button onClick={onClickHandler} disabled={isFetching}>
+                        {isFetching ? 'Loading...' : 'View More'}
+                    </Button>
+                )}
+            </div>
+
+        </div>
     );
 };
-
-export default CategoryMovies;

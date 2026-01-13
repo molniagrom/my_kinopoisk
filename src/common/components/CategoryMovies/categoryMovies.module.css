@@ -1,0 +1,12 @@
+.popularMovies {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(auto-fill, 1fr);
+    place-items: center;
+    grid-row-gap: 1.5rem;
+    grid-column-gap: 1.5rem;
+}
+
+.categoryMovies{
+    padding: 10px;
+}

@@ -25,4 +25,4 @@ export const moviesApi = baseApi.injectEndpoints({
     })
 })
 
-export const {useGetPopularMoviesQuery, useFetchSearcheMoviesByTitleQuery} = moviesApi;
+export const {useGetPopularMoviesQuery, useLazyGetPopularMoviesQuery, useFetchSearcheMoviesByTitleQuery} = moviesApi;

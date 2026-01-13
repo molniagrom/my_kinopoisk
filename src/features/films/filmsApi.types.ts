@@ -1,6 +1,6 @@
 /**
  * Description of one object from the film list */
-export interface Movie {
+export type Movie = {
     adult: boolean;
     backdrop_path: string | null;
     genre_ids: number[];
@@ -19,15 +19,15 @@ export interface Movie {
 
 /**
  * Description of the server root response */
-export interface MoviesResponse {
+export type MoviesResponse = {
     page: number;
     results: Movie[];
     total_pages: number;
     total_results: number;
 }
 
-export interface MovieQueryParams {
+export type MovieQueryParams = {
     language?: string;
     page?: number;
-    region?: string; // Тот самый ISO-3166-1 код
+    region?: string;
 }

@@ -1,11 +1,14 @@
-import { useGetPopularMoviesQuery } from "../../../features/films/moviesApi.ts";
+import {useGetPopularMoviesQuery} from "../../../features/films/moviesApi.ts";
 import Film from "../Film/Film.tsx";
 import s from "./Trending.module.css";
-import { FilmSlider } from "../FilmSlider/FilmSlider.tsx";
+import {FilmSlider} from "../FilmSlider/FilmSlider.tsx";
 import Button from '@mui/material/Button';
+import {useNavigate} from "react-router-dom";
+import {Path} from "../../routing/Routing.tsx";
 
 export const Trending = () => {
-    const { data, isLoading, isError } = useGetPopularMoviesQuery({ region: "MD", page: 1, language: "ru-RU" });
+    const {data, isLoading, isError} = useGetPopularMoviesQuery({region: "MD", page: 1, language: "ru-RU"});
+    const navigate = useNavigate();
 
     if (isLoading) {
         return <div className={s.trending}>Загрузка...</div>;
@@ -15,9 +18,13 @@ export const Trending = () => {
         return <div className={s.trending}>Ошибка при загрузке популярных фильмов.</div>;
     }
 
+    const onClickHandler = () => {
+        navigate(Path.CategoryMovies)
+    }
+
     return (
         <div className={s.trending}>
-            <h2>Popular Movies</h2>
+            <h2>Trending</h2>
             <FilmSlider>
                 {data.results
                     .filter(movie => movie.poster_path !== null)
@@ -31,7 +38,7 @@ export const Trending = () => {
                         />
                     ))}
             </FilmSlider>
-            <Button>View More</Button>
+            <Button onClick={onClickHandler}>View More</Button>
         </div>
     );
 };
