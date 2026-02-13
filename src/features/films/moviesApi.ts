@@ -25,6 +25,17 @@ export const moviesApi = baseApi.injectEndpoints({
             },
         }),
 
+        getPopularMoviesBackdrop: build.query<MoviesResponse, void>({
+            query: () => ({
+                url: '/movie/popular',
+                params: {
+                    language: 'en-US',
+                    page: 1,
+                    region: 'US',
+                },
+            }),
+        }),
+
         fetchSearcheMoviesByTitle: build.query<MoviesResponse, {query: string}>({
             query: ({query}) => ({
                 url: '/search/movie',
@@ -36,4 +47,4 @@ export const moviesApi = baseApi.injectEndpoints({
     })
 })
 
-export const {useGetPopularMoviesQuery, useLazyGetPopularMoviesQuery, useFetchSearcheMoviesByTitleQuery} = moviesApi;
+export const {useGetPopularMoviesQuery, useGetPopularMoviesBackdropQuery, useLazyGetPopularMoviesQuery, useFetchSearcheMoviesByTitleQuery} = moviesApi;
