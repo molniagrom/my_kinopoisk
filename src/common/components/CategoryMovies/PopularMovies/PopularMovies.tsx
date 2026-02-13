@@ -82,42 +82,21 @@
 
 import s from "../categoryMovies.module.css";
 import Film from "../../Film/Film.tsx";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 import Button from "@mui/material/Button";
 import {MOVIES_TO_SHOW} from "../../../constants";
-import {useLazyGetPopularMoviesQuery} from "../../../../features/films/moviesApi.ts";
-import type {Movie} from "../../../../features/films/filmsApi.types.ts";
+import {useGetPopularMoviesQuery} from "../../../../features/films/moviesApi.ts";
 
 
 export const PopularMovies = () => {
-    // Состояние для хранения всех загруженных фильмов
-    const [allMovies, setAllMovies] = useState<Movie[]>([]);
     // Состояние для отслеживания количества видимых фильмов
     const [visibleCount, setVisibleCount] = useState(MOVIES_TO_SHOW);
     // Состояние для номера страницы, запрашиваемой у API
-    const [apiPage, setApiPage] = useState(1);
+    const [page, setPage] = useState(1);
 
-    const [fetchMovies, {data, isFetching}] =
-        useLazyGetPopularMoviesQuery();
-
-    // Загружаем первую страницу фильмов при монтировании компонента
-    useEffect(() => {
-        fetchMovies({page: apiPage});
-    }, [apiPage, fetchMovies]);
-
-    // Когда приходят новые данные от API, добавляем их в общий список
-    useEffect(() => {
-        if (data?.results) {
-            // Добавляем только те фильмы, которых еще нет в списке
-            setAllMovies(prevMovies => {
-                const newMovies = data.results.filter(
-                    newMovie => !prevMovies.some(prevMovie => prevMovie.id === newMovie.id)
-                );
-                return [...prevMovies, ...newMovies];
-            });
-        }
-    }, [data]);
+    const {data, isFetching} = useGetPopularMoviesQuery({page});
+    const allMovies = data?.results ?? [];
 
     const onClickHandler = () => {
         const newVisibleCount = visibleCount + (MOVIES_TO_SHOW * 2);
@@ -125,7 +104,7 @@ export const PopularMovies = () => {
         // Если для показа следующих 5 фильмов не хватает данных, и загрузка не идет,
         // запрашиваем следующую страницу у API
         if (newVisibleCount > allMovies.length && !isFetching) {
-            setApiPage(prevPage => prevPage + 1);
+            setPage(prevPage => prevPage + 1);
         }
 
         setVisibleCount(newVisibleCount);

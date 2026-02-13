@@ -12,6 +12,17 @@ export const moviesApi = baseApi.injectEndpoints({
                     region,
                 },
             }),
+            serializeQueryArgs: ({endpointName}) => {
+                return endpointName;
+            },
+            // Сливаем новые данные с текущими
+            merge: (currentCache, newItems) => {
+                currentCache.results.push(...newItems.results);
+            },
+            // Принудительно делаем запрос, если изменилась страница
+            forceRefetch({currentArg, previousArg}) {
+                return currentArg?.page !== previousArg?.page;
+            },
         }),
 
         fetchSearcheMoviesByTitle: build.query<MoviesResponse, {query: string}>({
