@@ -6,6 +6,7 @@ import {
     useFetchSearcheMoviesByTitleQuery,
     useGetPopularMoviesBackdropQuery,
 } from "../../../features/films/moviesApi.ts";
+import {getRandomNumber} from "../../utils/utils.ts";
 
 export function Welcome() {
     const [inputValue, setInputValue] = useState('')
@@ -25,17 +26,18 @@ export function Welcome() {
         }
 
         const timeoutId = window.setTimeout(() => {
-            const randomIndex = Math.floor(Math.random() * moviesWithBackdrop.length)
+            const randomIndex = getRandomNumber(moviesWithBackdrop.length)
             setRandomBackdropPath(moviesWithBackdrop[randomIndex].backdrop_path)
         }, 0)
 
         return () => window.clearTimeout(timeoutId)
     }, [popularMoviesData])
 
-    const welcomeStyle: CSSProperties | undefined = randomBackdropPath
+    // Pass the image URL via a CSS variable
+    const welcomeStyle = randomBackdropPath
         ? {
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://image.tmdb.org/t/p/original${randomBackdropPath}")`,
-        }
+            '--backdrop-url': `url("https://image.tmdb.org/t/p/original${randomBackdropPath}")`,
+        } as CSSProperties
         : undefined
 
     const onInputChangeHandler = (_event: SyntheticEvent, value: string) => {
