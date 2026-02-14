@@ -24,6 +24,25 @@ export const moviesApi = baseApi.injectEndpoints({
                 return currentArg?.page !== previousArg?.page;
             },
         }),
+        getTopRatedMovies: build.query<MoviesResponse, MovieQueryParams>({
+            query: ({language = 'en-US', page = 1, region = 'MD'}) => ({
+                url: '/movie/top_rated',
+                params: {
+                    language,
+                    page,
+                    region,
+                },
+            }),
+            serializeQueryArgs: ({endpointName}) => {
+                return endpointName;
+            },
+            merge: (currentCache, newItems) => {
+                currentCache.results.push(...newItems.results);
+            },
+            forceRefetch({currentArg, previousArg}) {
+                return currentArg?.page !== previousArg?.page;
+            },
+        }),
 
         getPopularMoviesBackdrop: build.query<MoviesResponse, void>({
             query: () => ({
@@ -47,4 +66,10 @@ export const moviesApi = baseApi.injectEndpoints({
     })
 })
 
-export const {useGetPopularMoviesQuery, useGetPopularMoviesBackdropQuery, useLazyGetPopularMoviesQuery, useFetchSearcheMoviesByTitleQuery} = moviesApi;
+export const {
+    useGetPopularMoviesQuery,
+    useGetTopRatedMoviesQuery,
+    useGetPopularMoviesBackdropQuery,
+    useLazyGetPopularMoviesQuery,
+    useFetchSearcheMoviesByTitleQuery
+} = moviesApi;
