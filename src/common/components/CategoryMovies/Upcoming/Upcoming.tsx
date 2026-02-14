@@ -3,14 +3,14 @@ import Film from "../../Film/Film.tsx";
 import {useState} from "react";
 import Button from "@mui/material/Button";
 import {MOVIES_TO_SHOW} from "../../../constants";
-import {useGetTopRatedMoviesQuery} from "../../../../features/films/moviesApi.ts";
+import {useGetUpcomingMoviesQuery} from "../../../../features/films/moviesApi.ts";
 import {EmptyMoviesState} from "../EmptyMoviesState/EmptyMoviesState.tsx";
 
-export const TopRated = () => {
+export const Upcoming = () => {
     const [visibleCount, setVisibleCount] = useState(MOVIES_TO_SHOW);
     const [page, setPage] = useState(1);
 
-    const {data, isFetching} = useGetTopRatedMoviesQuery({page});
+    const {data, isFetching} = useGetUpcomingMoviesQuery({page});
     const allMovies = data?.results ?? [];
 
     const onClickHandler = () => {
@@ -25,7 +25,7 @@ export const TopRated = () => {
 
     return (
         <div>
-            <h1>Top Rated</h1>
+            <h1>Upcoming</h1>
             {!isFetching && allMovies.length === 0 && <EmptyMoviesState/>}
             <div className={s.popularMovies}>
                 {allMovies
