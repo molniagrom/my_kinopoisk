@@ -43,6 +43,44 @@ export const moviesApi = baseApi.injectEndpoints({
                 return currentArg?.page !== previousArg?.page;
             },
         }),
+        getNowPlayingMovies: build.query<MoviesResponse, MovieQueryParams>({
+            query: ({language = 'en-US', page = 1, region = 'MD'}) => ({
+                url: '/movie/now_playing',
+                params: {
+                    language,
+                    page,
+                    region,
+                },
+            }),
+            serializeQueryArgs: ({endpointName}) => {
+                return endpointName;
+            },
+            merge: (currentCache, newItems) => {
+                currentCache.results.push(...newItems.results);
+            },
+            forceRefetch({currentArg, previousArg}) {
+                return currentArg?.page !== previousArg?.page;
+            },
+        }),
+        getUpcomingMovies: build.query<MoviesResponse, MovieQueryParams>({
+            query: ({language = 'en-US', page = 1, region = 'MD'}) => ({
+                url: '/movie/upcoming',
+                params: {
+                    language,
+                    page,
+                    region,
+                },
+            }),
+            serializeQueryArgs: ({endpointName}) => {
+                return endpointName;
+            },
+            merge: (currentCache, newItems) => {
+                currentCache.results.push(...newItems.results);
+            },
+            forceRefetch({currentArg, previousArg}) {
+                return currentArg?.page !== previousArg?.page;
+            },
+        }),
 
         getPopularMoviesBackdrop: build.query<MoviesResponse, void>({
             query: () => ({
@@ -69,6 +107,8 @@ export const moviesApi = baseApi.injectEndpoints({
 export const {
     useGetPopularMoviesQuery,
     useGetTopRatedMoviesQuery,
+    useGetNowPlayingMoviesQuery,
+    useGetUpcomingMoviesQuery,
     useGetPopularMoviesBackdropQuery,
     useLazyGetPopularMoviesQuery,
     useFetchSearcheMoviesByTitleQuery

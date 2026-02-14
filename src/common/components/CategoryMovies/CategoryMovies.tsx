@@ -1,6 +1,8 @@
 import s from "./categoryMovies.module.css"
 import {PopularMovies} from "./PopularMovies/PopularMovies.tsx";
 import {TopRated} from "./TopRated/TopRated.tsx";
+import {NowPlaying} from "./NowPlaying/NowPlaying.tsx";
+import {Upcoming} from "./Upcoming/Upcoming.tsx";
 
 
 export const CategoryMovies = () => {
@@ -11,6 +13,8 @@ export const CategoryMovies = () => {
 
             <PopularMovies/>
             <TopRated/>
+            <NowPlaying/>
+            <Upcoming/>
 
         </div>
     );
