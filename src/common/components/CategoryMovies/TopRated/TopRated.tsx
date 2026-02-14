@@ -4,6 +4,7 @@ import {useState} from "react";
 import Button from "@mui/material/Button";
 import {MOVIES_TO_SHOW} from "../../../constants";
 import {useGetTopRatedMoviesQuery} from "../../../../features/films/moviesApi.ts";
+import {EmptyMoviesState} from "../EmptyMoviesState/EmptyMoviesState.tsx";
 
 export const TopRated = () => {
     const [visibleCount, setVisibleCount] = useState(MOVIES_TO_SHOW);
@@ -25,6 +26,7 @@ export const TopRated = () => {
     return (
         <div>
             <h1>Top Rated</h1>
+            {!isFetching && allMovies.length === 0 && <EmptyMoviesState/>}
             <div className={s.popularMovies}>
                 {allMovies
                     .slice(0, visibleCount)

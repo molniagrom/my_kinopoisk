@@ -87,6 +87,7 @@ import {useState} from "react";
 import Button from "@mui/material/Button";
 import {MOVIES_TO_SHOW} from "../../../constants";
 import {useGetPopularMoviesQuery} from "../../../../features/films/moviesApi.ts";
+import {EmptyMoviesState} from "../EmptyMoviesState/EmptyMoviesState.tsx";
 
 
 export const PopularMovies = () => {
@@ -113,6 +114,7 @@ export const PopularMovies = () => {
     return (
         <div>
             <h1>Popular Movies</h1>
+            {!isFetching && allMovies.length === 0 && <EmptyMoviesState/>}
             <div className={s.popularMovies}>
                 {allMovies
                     .slice(0, visibleCount) // Показываем только часть фильмов

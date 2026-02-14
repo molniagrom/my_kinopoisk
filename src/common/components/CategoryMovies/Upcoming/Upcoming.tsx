@@ -4,6 +4,7 @@ import {useState} from "react";
 import Button from "@mui/material/Button";
 import {MOVIES_TO_SHOW} from "../../../constants";
 import {useGetUpcomingMoviesQuery} from "../../../../features/films/moviesApi.ts";
+import {EmptyMoviesState} from "../EmptyMoviesState/EmptyMoviesState.tsx";
 
 export const Upcoming = () => {
     const [visibleCount, setVisibleCount] = useState(MOVIES_TO_SHOW);
@@ -25,6 +26,7 @@ export const Upcoming = () => {
     return (
         <div>
             <h1>Upcoming</h1>
+            {!isFetching && allMovies.length === 0 && <EmptyMoviesState/>}
             <div className={s.popularMovies}>
                 {allMovies
                     .slice(0, visibleCount)
