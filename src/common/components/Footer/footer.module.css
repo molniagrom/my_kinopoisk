@@ -1,0 +1,18 @@
+.footer {
+  position: static;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1200;
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #111;
+  color: #d9d9d9;
+  border-top: 1px solid #2f2f2f;
+  box-sizing: border-box;
+}
+
+.text {
+  margin: 0;
+  font-size: 14px;
+}

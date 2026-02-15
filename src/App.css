@@ -2,7 +2,17 @@
   max-width: 100%;
   margin: 0;
   padding: 0;
-  /*padding-top: 43px;*/
   text-align: center;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.appMain {
+  flex: 1;
+  padding-bottom: 50px;
 }
 
