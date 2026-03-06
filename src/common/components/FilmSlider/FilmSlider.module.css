@@ -7,30 +7,22 @@
 .items {
     display: flex;
     gap: 20px;
-    padding: 0 10px; /* Add some padding so items aren't flush with the edge */
-
-    /* Core scrolling setup */
+    padding: 0 10px;
     overflow-x: scroll;
-    scroll-behavior: smooth; /* Makes button clicks smooth */
-
-    /* Drag-to-scroll setup */
+    scroll-behavior: smooth;
     cursor: grab;
     user-select: none;
-
-    /* Hide scrollbar */
-    scrollbar-width: none; /* For Firefox */
+    scrollbar-width: none;
 }
 
 .items::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
+    display: none;
 }
 
-/* This is the key fix for item width */
 .items > * {
     flex-shrink: 0;
-    width: 220px; /* Adjust this width as needed for your Film cards */
+    width: 220px;
 }
-
 
 .items.active {
     cursor: grabbing;
@@ -42,9 +34,9 @@
     transform: translateY(-50%);
     width: 45px;
     height: 45px;
-    background-color: rgba(23, 23, 23, 0.6);
-    color: white;
-    border: 1px solid white;
+    background: linear-gradient(160deg, rgba(74, 74, 74, 0.9), rgba(44, 47, 51, 0.92));
+    color: var(--metal-silver-bright);
+    border: 1px solid rgba(168, 169, 173, 0.55);
     border-radius: 50%;
     font-size: 24px;
     font-weight: bold;
@@ -53,11 +45,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: box-shadow 0.3s, transform 0.2s;
 }
 
 .navButton:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    border-color: var(--decepticon-purple-alt);
+    box-shadow: 0 0 14px rgba(111, 45, 168, 0.45);
     transform: translateY(-50%) scale(1.05);
 }
 

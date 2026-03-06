@@ -42,25 +42,16 @@ export const Header = () => {
                         component="img"
                         src={tmdbLogo}
                         alt="TMDB Logo"
-                        sx={{
-                            height: 40,
-                            mr: 3,
-                        }}
+                        className={s.logo}
                     />
                     <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
                         {navLinks.map((link) => (
                             <Button
                                 key={link.path}
                                 color="inherit"
+                                className={s.navButton}
                                 component={Link}
                                 to={link.path}
-                                sx={{
-                                    transition: 'all 0.3s ease',
-                                    '&:hover': {
-                                        color: '#c8e6c9',
-                                        transform: 'scale(1.05)'
-                                    }
-                                }}
                             >
                                 {link.label}
                             </Button>
@@ -70,7 +61,7 @@ export const Header = () => {
                 <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
                     <AddCircleIcon sx={{ fontSize: 40 }} />
                     <MyAvatar src="https://i.pravatar.cc/150?img=3" alt="User Avatar" size={40} />
-                    <Button color="success" variant="contained">log out</Button>
+                    <Button className={s.logoutButton} variant="contained">log out</Button>
                     <SearchIcon sx={{ fontSize: 30, cursor: 'pointer' }} />
                     <NotificationsIcon sx={{ fontSize: 30, cursor: 'pointer' }} />
                 </Box>
@@ -119,7 +110,7 @@ export const Header = () => {
                             <span style={{ marginLeft: '8px' }}>Profile</span>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
-                            <Button color="success" variant="contained" size="small" fullWidth>log out</Button>
+                            <Button className={s.logoutButton} variant="contained" size="small" fullWidth>log out</Button>
                         </MenuItem>
                     </Menu>
                 </Box>

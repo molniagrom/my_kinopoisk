@@ -1,11 +1,23 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Segoe UI", "Tahoma", "Verdana", sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #e5e6ea;
+  background-color: #0f1114;
+  --metal-black: #0f1114;
+  --metal-black-soft: #1a202b;
+  --gunmetal-dark: #2c2f33;
+  --gunmetal-main: #363b40;
+  --gunmetal-light: #4a4a4a;
+  --metal-silver: #a8a9ad;
+  --metal-silver-bright: #bebebe;
+  --decepticon-purple: #5e2a84;
+  --decepticon-purple-alt: #6f2da8;
+  --decepticon-purple-bright: #8712b6;
+  --crimson-red: #781518;
+  --crimson-red-bright: #c8102e;
+  --text-main: #e5e6ea;
+  --text-muted: #b6b8bf;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,12 +27,76 @@
 
 body {
   margin: 0;
-  /*display: flex;*/
-  /*flex-direction: column;*/
-  /*align-items: center;*/
-  /*justify-content: center;*/
-  /*place-items: center;*/
   min-width: 320px;
   min-height: 100vh;
+  color: var(--text-main);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(111, 45, 168, 0.2), transparent 44%),
+    radial-gradient(circle at 88% 10%, rgba(120, 21, 24, 0.14), transparent 36%),
+    linear-gradient(180deg, var(--gunmetal-dark) 0%, var(--metal-black) 65%, #0a0c0f 100%);
 }
 
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--metal-silver-bright);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.MuiAppBar-root {
+  background: linear-gradient(180deg, #43484f 0%, #2c2f33 100%) !important;
+  border-bottom: 1px solid rgba(168, 169, 173, 0.2);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+.MuiButton-root {
+  border-radius: 10px !important;
+  border: 1px solid rgba(168, 169, 173, 0.28) !important;
+  color: var(--metal-silver-bright) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.MuiButton-contained {
+  background: linear-gradient(135deg, var(--decepticon-purple) 0%, var(--decepticon-purple-bright) 100%) !important;
+}
+
+.MuiButton-contained:hover {
+  box-shadow: 0 0 18px rgba(111, 45, 168, 0.45);
+}
+
+.MuiButton-text:hover {
+  border-color: rgba(111, 45, 168, 0.8) !important;
+  color: var(--decepticon-purple-bright) !important;
+}
+
+.MuiIconButton-root,
+.MuiSvgIcon-root {
+  color: var(--metal-silver-bright);
+}
+
+.MuiPaper-root {
+  background: linear-gradient(180deg, #33383e 0%, #24282d 100%) !important;
+  color: var(--metal-silver-bright) !important;
+}
+
+.MuiMenuItem-root:hover {
+  background-color: rgba(111, 45, 168, 0.2) !important;
+}
+
+.MuiOutlinedInput-root {
+  color: var(--metal-silver-bright) !important;
+}
+
+.MuiAutocomplete-popper .MuiPaper-root {
+  border: 1px solid rgba(111, 45, 168, 0.45);
+}
+
+.MuiAutocomplete-option[data-focus="true"] {
+  background-color: rgba(111, 45, 168, 0.22) !important;
+}

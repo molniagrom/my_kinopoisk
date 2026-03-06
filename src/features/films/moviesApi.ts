@@ -4,7 +4,7 @@ import type {MovieQueryParams, MoviesResponse} from "./filmsApi.types.ts";
 export const moviesApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         getPopularMovies: build.query<MoviesResponse, MovieQueryParams>({
-            query: ({language = 'en-US', page = 1, region = 'MD'}) => ({
+            query: ({language = 'en-US', page = 1, region = 'US'}) => ({
                 url: '/movie/popular',
                 params: {
                     language,
@@ -25,7 +25,7 @@ export const moviesApi = baseApi.injectEndpoints({
             },
         }),
         getTopRatedMovies: build.query<MoviesResponse, MovieQueryParams>({
-            query: ({language = 'en-US', page = 1, region = 'MD'}) => ({
+            query: ({language = 'en-US', page = 1, region = 'US'}) => ({
                 url: '/movie/top_rated',
                 params: {
                     language,
@@ -44,7 +44,7 @@ export const moviesApi = baseApi.injectEndpoints({
             },
         }),
         getNowPlayingMovies: build.query<MoviesResponse, MovieQueryParams>({
-            query: ({language = 'en-US', page = 1, region = 'MD'}) => ({
+            query: ({language = 'en-US', page = 1, region = 'US'}) => ({
                 url: '/movie/now_playing',
                 params: {
                     language,
@@ -63,7 +63,7 @@ export const moviesApi = baseApi.injectEndpoints({
             },
         }),
         getUpcomingMovies: build.query<MoviesResponse, MovieQueryParams>({
-            query: ({language = 'en-US', page = 1, region = 'MD'}) => ({
+            query: ({language = 'en-US', page = 1, region = 'US'}) => ({
                 url: '/movie/upcoming',
                 params: {
                     language,

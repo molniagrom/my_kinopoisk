@@ -8,12 +8,12 @@
 }
 
 .categoryMovies{
-    padding: 10px;
+    padding: 14px;
 }
 
 .emptyMoviesState {
     font-size: 14px;
-    color: #b0b0b0;
+    color: var(--text-muted);
     text-align: center;
     padding: 8px 0 16px;
 }

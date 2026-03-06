@@ -6,9 +6,9 @@
   z-index: 1200;
   width: 100%;
   padding: 12px 16px;
-  background-color: #111;
-  color: #d9d9d9;
-  border-top: 1px solid #2f2f2f;
+  background: linear-gradient(180deg, var(--gunmetal-dark) 0%, var(--metal-black) 100%);
+  color: var(--metal-silver);
+  border-top: 1px solid rgba(168, 169, 173, 0.25);
   box-sizing: border-box;
 }
 

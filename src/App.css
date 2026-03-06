@@ -9,6 +9,13 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background:
+    linear-gradient(145deg, rgba(74, 74, 74, 0.22), transparent 35%),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(168, 169, 173, 0.03) 0 8px,
+      rgba(15, 17, 20, 0.08) 8px 16px
+    );
 }
 
 .appMain {
