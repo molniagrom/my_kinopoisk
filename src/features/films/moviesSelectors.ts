@@ -1,4 +1,4 @@
-import type { MoviesSliceType } from "./moviesSlice.types.ts";
+import type { MoviesSliceType } from './moviesSlice.types.ts';
 
 export const selectPopularMovies = (state: { movies: MoviesSliceType }) => state.movies.popularMovies;
 export const selectPopularMoviesCount = (state: { movies: MoviesSliceType }) => state.movies.popularMovies.length;

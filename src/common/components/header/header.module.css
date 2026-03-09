@@ -1,40 +1,40 @@
 .header {
-    position: sticky !important;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: 1100;
-    margin: 0;
-    padding: 0;
-    backdrop-filter: blur(6px);
+  position: sticky !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1100;
+  margin: 0;
+  padding: 0;
+  backdrop-filter: blur(6px);
 }
 
 .toolbar {
-    justify-content: space-between;
-    gap: 1rem;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .logo {
-    height: 40px;
-    margin-right: 24px;
-    filter: grayscale(1) brightness(0.8) contrast(1.2);
+  height: 40px;
+  margin-right: 24px;
+  filter: grayscale(1) brightness(0.8) contrast(1.2);
 }
 
 .navButton {
-    transition: all 0.25s ease !important;
+  transition: all 0.25s ease !important;
 }
 
 .navButton:hover {
-    color: var(--decepticon-purple-bright) !important;
-    border-color: rgba(111, 45, 168, 0.85) !important;
-    box-shadow: 0 0 14px rgba(111, 45, 168, 0.32);
+  color: var(--decepticon-purple-bright) !important;
+  border-color: rgba(111, 45, 168, 0.85) !important;
+  box-shadow: 0 0 14px rgba(111, 45, 168, 0.32);
 }
 
 .logoutButton {
-    background: linear-gradient(135deg, var(--decepticon-purple) 0%, var(--decepticon-purple-bright) 100%) !important;
+  background: linear-gradient(135deg, var(--decepticon-purple) 0%, var(--decepticon-purple-bright) 100%) !important;
 }
 
 .logoutButton:hover {
-    box-shadow: 0 0 18px rgba(111, 45, 168, 0.45);
+  box-shadow: 0 0 18px rgba(111, 45, 168, 0.45);
 }

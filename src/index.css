@@ -1,5 +1,5 @@
 :root {
-  font-family: "Segoe UI", "Tahoma", "Verdana", sans-serif;
+  font-family: 'Segoe UI', 'Tahoma', 'Verdana', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: #e5e6ea;
@@ -97,6 +97,6 @@ h3 {
   border: 1px solid rgba(111, 45, 168, 0.45);
 }
 
-.MuiAutocomplete-option[data-focus="true"] {
+.MuiAutocomplete-option[data-focus='true'] {
   background-color: rgba(111, 45, 168, 0.22) !important;
 }

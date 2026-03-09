@@ -2,120 +2,118 @@
 }
 
 .welcome {
-    --backdrop-url: none;
+  --backdrop-url: none;
 
-    background-image: linear-gradient(
-            rgba(12, 14, 18, 0.82),
-            rgba(12, 14, 18, 0.82)
-    ),
-    var(--backdrop-url);
+  background-image: linear-gradient(rgba(12, 14, 18, 0.82), rgba(12, 14, 18, 0.82)), var(--backdrop-url);
 
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 180px 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: background-image 0.5s ease-in-out;
-    border-bottom: 1px solid rgba(168, 169, 173, 0.18);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 180px 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s ease-in-out;
+  border-bottom: 1px solid rgba(168, 169, 173, 0.18);
 }
 
 .hero__search {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
 }
 
 .text {
-    text-align: left;
-    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.65);
+  text-align: left;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.65);
 }
 
 .content__wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px 40px;
-    border: 1px solid rgba(168, 169, 173, 0.2);
-    border-radius: 14px;
-    background:
-            linear-gradient(160deg, rgba(74, 74, 74, 0.5), rgba(44, 47, 51, 0.65)),
-            radial-gradient(circle at top left, rgba(111, 45, 168, 0.2), transparent 45%);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 40px;
+  border: 1px solid rgba(168, 169, 173, 0.2);
+  border-radius: 14px;
+  background:
+    linear-gradient(160deg, rgba(74, 74, 74, 0.5), rgba(44, 47, 51, 0.65)),
+    radial-gradient(circle at top left, rgba(111, 45, 168, 0.2), transparent 45%);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
 }
 
 .autocomplete {
-    width: 300px;
+  width: 300px;
 }
 
 .autocomplete :global .MuiAutocomplete-popupIndicator,
 .autocomplete :global .MuiAutocomplete-clearIndicator {
-    color: var(--metal-silver-bright);
+  color: var(--metal-silver-bright);
 }
 
 .textField :global .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
-    border-color: rgba(168, 169, 173, 0.6);
+  border-color: rgba(168, 169, 173, 0.6);
 }
 
 .textField :global .MuiOutlinedInput-input {
-    color: var(--metal-silver-bright);
+  color: var(--metal-silver-bright);
 }
 
 .textField :global .MuiInputLabel-outlined {
-    color: rgba(190, 190, 190, 0.75);
+  color: rgba(190, 190, 190, 0.75);
 }
 
 .textField:hover :global .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline,
 .textField:hover :global .MuiInputLabel-outlined {
-    border-color: var(--decepticon-purple-alt);
-    color: var(--decepticon-purple-bright);
+  border-color: var(--decepticon-purple-alt);
+  color: var(--decepticon-purple-bright);
 }
 
 .textField :global .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
 .textField :global .MuiInputLabel-outlined.Mui-focused {
-    border-color: var(--decepticon-purple-alt);
-    color: var(--decepticon-purple-bright);
+  border-color: var(--decepticon-purple-alt);
+  color: var(--decepticon-purple-bright);
 }
 
 .hero__search button {
-    height: 56px;
-    padding: 0 22px;
-    border-radius: 10px;
-    border: 1px solid rgba(111, 45, 168, 0.8);
-    background: linear-gradient(135deg, var(--decepticon-purple) 0%, var(--decepticon-purple-bright) 100%);
-    color: var(--metal-silver-bright);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 56px;
+  padding: 0 22px;
+  border-radius: 10px;
+  border: 1px solid rgba(111, 45, 168, 0.8);
+  background: linear-gradient(135deg, var(--decepticon-purple) 0%, var(--decepticon-purple-bright) 100%);
+  color: var(--metal-silver-bright);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .hero__search button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 0 16px rgba(111, 45, 168, 0.45);
+  transform: translateY(-1px);
+  box-shadow: 0 0 16px rgba(111, 45, 168, 0.45);
 }
 
 @media (max-width: 768px) {
-    .content__wrapper {
-        margin: 0 14px;
-        width: calc(100% - 28px);
-        padding: 20px;
-    }
+  .content__wrapper {
+    margin: 0 14px;
+    width: calc(100% - 28px);
+    padding: 20px;
+  }
 
-    .hero__search {
-        width: 100%;
-        flex-direction: column;
-    }
+  .hero__search {
+    width: 100%;
+    flex-direction: column;
+  }
 
-    .autocomplete {
-        width: 100%;
-    }
+  .autocomplete {
+    width: 100%;
+  }
 
-    .hero__search button {
-        width: 100%;
-    }
+  .hero__search button {
+    width: 100%;
+  }
 }
