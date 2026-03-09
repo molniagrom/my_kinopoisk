@@ -31,3 +31,18 @@ export type MovieQueryParams = {
   page?: number;
   region?: string;
 };
+
+export type Genre = {
+  id: number;
+  name: string;
+};
+
+export type MovieDetail = Movie & {
+  genres: Genre[];
+  homepage: string | null;
+  runtime: number | null;
+  budget: number;
+  revenue: number;
+  status: string;
+  tagline: string | null;
+};

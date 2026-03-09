@@ -19,6 +19,12 @@
   cursor: pointer;
 }
 
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .imageContainer {
   position: relative;
   width: 100%;

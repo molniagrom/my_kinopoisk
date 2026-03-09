@@ -1,5 +1,5 @@
 import { baseApi } from '../api/baseApi.ts';
-import type { MovieQueryParams, MoviesResponse } from './filmsApi.types.ts';
+import type { MovieDetail, MovieQueryParams, MoviesResponse } from './filmsApi.types.ts';
 
 export const moviesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -101,6 +101,16 @@ export const moviesApi = baseApi.injectEndpoints({
         },
       }),
     }),
+
+    getMovieById: build.query<MovieDetail, { movieId: number; language?: string }>({
+      query: ({ movieId, language = 'en-US' }) => ({
+        url: `/movie/${movieId}`,
+        params: {
+          language,
+        },
+      }),
+      keepUnusedDataFor: 60,
+    }),
   }),
 });
 
@@ -110,6 +120,6 @@ export const {
   useGetNowPlayingMoviesQuery,
   useGetUpcomingMoviesQuery,
   useGetPopularMoviesBackdropQuery,
-  useLazyGetPopularMoviesQuery,
   useFetchSearcheMoviesByTitleQuery,
+  useGetMovieByIdQuery,
 } = moviesApi;

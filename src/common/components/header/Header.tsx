@@ -12,7 +12,7 @@ import s from './header.module.css';
 import { useState } from 'react';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Path } from '../../routing/Routing';
+import { Path } from '../../routing/paths.ts';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';

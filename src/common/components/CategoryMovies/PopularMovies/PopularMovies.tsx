@@ -121,6 +121,7 @@ export const PopularMovies = () => {
           .map((movie) => (
             <Film
               key={movie.id}
+              movieId={movie.id}
               title={movie.original_title}
               releaseDate={movie.release_date}
               voteAverage={movie.vote_average}

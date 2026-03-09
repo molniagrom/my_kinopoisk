@@ -5,17 +5,8 @@ import { Main } from '../components/Main/Main.tsx';
 import { Routes, Route } from 'react-router-dom';
 import Favorites from '../components/Favorites/Favorites.tsx';
 import { PageNotFound } from '../components/PageNotFound/PageNotFound.tsx';
-
-export const Path = {
-  Main: '/',
-  CategoryMovies: '/categoryMovies',
-  FilteredMovies: '/filteredMovies',
-  Search: '/search',
-  Favorites: '/favorites',
-  //   Login: "login",
-  NotFound: '*',
-} as const;
-
+import { MovieDetail } from '../components/MovieDetail/MovieDetail.tsx';
+import { Path } from './paths.ts';
 export const Routing = () => {
   return (
     <Routes>
@@ -24,6 +15,7 @@ export const Routing = () => {
       <Route path={Path.FilteredMovies} element={<FilteredMovies />} />
       <Route path={Path.Search} element={<Search />} />
       <Route path={Path.Favorites} element={<Favorites />} />
+      <Route path={Path.MovieDetails} element={<MovieDetail />} />
       <Route path={Path.NotFound} element={<PageNotFound />} />
     </Routes>
   );

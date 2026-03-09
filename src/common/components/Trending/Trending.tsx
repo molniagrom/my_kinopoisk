@@ -4,7 +4,7 @@ import s from './Trending.module.css';
 import { FilmSlider } from '../FilmSlider/FilmSlider.tsx';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-import { Path } from '../../routing/Routing.tsx';
+import { Path } from '../../routing/paths.ts';
 
 export const Trending = () => {
   const { data, isLoading, isError } = useGetPopularMoviesQuery({ region: 'MD', page: 1, language: 'ru-RU' });
@@ -31,6 +31,7 @@ export const Trending = () => {
           .map((movie) => (
             <Film
               key={movie.id}
+              movieId={movie.id}
               title={movie.original_title}
               releaseDate={movie.release_date}
               voteAverage={movie.vote_average}

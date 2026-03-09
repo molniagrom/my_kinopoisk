@@ -1,0 +1,115 @@
+.page {
+  margin: 32px;
+  padding: 32px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(23, 27, 34, 0.9), rgba(11, 12, 16, 0.95));
+  color: var(--text-main);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+}
+
+.backdrop {
+  border-radius: 20px;
+  min-height: 320px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.65);
+}
+
+.content {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: minmax(220px, 240px) 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.posterWrapper {
+  width: 100%;
+}
+
+.poster {
+  width: 100%;
+  border-radius: 18px;
+  object-fit: cover;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.headerRow h1 {
+  margin: 0;
+  font-size: 2.4rem;
+  line-height: 1.1;
+}
+
+.tagline {
+  font-style: italic;
+  color: var(--metal-silver);
+  margin: 0;
+}
+
+.metaRow,
+.statsRow {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.overview {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.genreChip {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 0.85rem;
+}
+
+.message,
+.loader {
+  margin: 64px auto;
+  text-align: center;
+  color: var(--text-main);
+}
+
+.button {
+  margin-top: 16px;
+}
+
+.poster + .details {
+  flex: none;
+}
+
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
