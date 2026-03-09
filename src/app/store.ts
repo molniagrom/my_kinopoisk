@@ -18,6 +18,6 @@ setupListeners(store.dispatch);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-// для возможности обращения к store в консоли браузера
-// @ts-ignore
+// Для доступа к store из консоли во время разработки; это не часть DOM-типов.
+// @ts-expect-error store не объявлен в интерфейсе Window, но добавляем его сознательно.
 window.store = store;
