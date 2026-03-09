@@ -3,12 +3,14 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 // import { appReducer, appSlice } from "./app-slice.ts"
 import { baseApi } from '../features/api/baseApi.ts';
 import { moviesSlice } from '../features/films/moviesSlice.ts';
+import { themeReducer } from '../features/theme/themeSlice.ts';
 
 export const store = configureStore({
   reducer: {
     // [appSlice.name]: appReducer,
     [baseApi.reducerPath]: baseApi.reducer,
     [moviesSlice.name]: moviesSlice.reducer,
+    theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
 });

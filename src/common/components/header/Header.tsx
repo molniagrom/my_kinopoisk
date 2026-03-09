@@ -13,6 +13,10 @@ import { useState } from 'react';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Path } from '../../routing/Routing';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { toggleTheme } from '@/features/theme/themeSlice';
 
 const navLinks = [
   { label: 'Main', path: Path.Main },
@@ -25,6 +29,9 @@ const navLinks = [
 export const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const dispatch = useAppDispatch();
+  const themeMode = useAppSelector((state) => state.theme.mode);
+  const isDarkTheme = themeMode === 'dark';
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -55,6 +62,14 @@ export const Header = () => {
           </Button>
           <SearchIcon sx={{ fontSize: 30, cursor: 'pointer' }} />
           <NotificationsIcon sx={{ fontSize: 30, cursor: 'pointer' }} />
+          <IconButton
+            color="inherit"
+            aria-label="toggle theme"
+            onClick={() => dispatch(toggleTheme())}
+            size="large"
+          >
+            {isDarkTheme ? <LightModeIcon /> : <Brightness4Icon />}
+          </IconButton>
         </Box>
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
           <IconButton size="large" edge="end" color="inherit" aria-label="menu" onClick={handleMenu}>
@@ -93,6 +108,19 @@ export const Header = () => {
             <MenuItem onClick={handleClose}>
               <MyAvatar src="https://i.pravatar.cc/150?img=3" alt="User Avatar" size={24} />
               <span style={{ marginLeft: '8px' }}>Profile</span>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                dispatch(toggleTheme());
+                handleClose();
+              }}
+            >
+              {isDarkTheme ? (
+                <LightModeIcon sx={{ mr: 1 }} />
+              ) : (
+                <Brightness4Icon sx={{ mr: 1 }} />
+              )}
+              <span style={{ marginLeft: '8px' }}>Toggle theme</span>
             </MenuItem>
             <MenuItem onClick={handleClose}>
               <Button className={s.logoutButton} variant="contained" size="small" fullWidth>
