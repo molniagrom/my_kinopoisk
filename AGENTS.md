@@ -48,3 +48,6 @@
 
 - Keep secrets in `.env.local`; do not commit API keys.
 - Treat `.env` as non-sensitive defaults only.
+
+# Context Settings
+context7: true
