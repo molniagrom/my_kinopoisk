@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams, type Location } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
@@ -11,6 +11,8 @@ const BACKDROP_PLACEHOLDER = 'https://placehold.co/1200x675?text=No+Backdrop&bac
 
 export const MovieDetail = () => {
   const { movieId } = useParams<{ movieId?: string }>();
+  const location = useLocation();
+  const backTarget = (location.state as { from?: Location } | null)?.from ?? Path.Main;
   const parsedId = Number(movieId);
   const skip = Number.isNaN(parsedId);
   const { data: movie, isFetching } = useGetMovieByIdQuery({ movieId: parsedId }, { skip });
@@ -19,7 +21,7 @@ export const MovieDetail = () => {
     return (
       <div className={styles.message}>
         <p>Некорректный идентификатор фильма.</p>
-        <Button component={Link} to={Path.Main} variant="contained" startIcon={<ArrowBackIcon />}>
+        <Button component={Link} to={backTarget} variant="contained" startIcon={<ArrowBackIcon />}>
           Вернуться на главную
         </Button>
       </div>
@@ -34,7 +36,7 @@ export const MovieDetail = () => {
     return (
       <div className={styles.message}>
         <p>Фильм не найден.</p>
-        <Button component={Link} to={Path.Main} variant="contained" startIcon={<ArrowBackIcon />}>
+        <Button component={Link} to={backTarget} variant="contained" startIcon={<ArrowBackIcon />}>
           Вернуться
         </Button>
       </div>
@@ -62,7 +64,7 @@ export const MovieDetail = () => {
             <h1>{movie.title}</h1>
             <Button
               component={Link}
-              to={Path.Main}
+              to={backTarget}
               variant="outlined"
               startIcon={<ArrowBackIcon />}
               size="small"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import styles from './film.module.css';
 import { moviePagePath } from '../../routing/paths.ts';
@@ -13,6 +13,7 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movieId, title, releaseDate, voteAverage, posterPath }) => {
+  const location = useLocation();
   const formattedDate = new Date(releaseDate).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
@@ -22,7 +23,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movieId, title, releaseDate, vote
   const percentage = Math.round(voteAverage * 10);
 
   return (
-    <Link to={moviePagePath(movieId)} className={styles.cardLink}>
+    <Link to={moviePagePath(movieId)} state={{ from: location }} className={styles.cardLink}>
       <div className={styles.card}>
         <div className={styles.imageContainer}>
           <img src={`https://image.tmdb.org/t/p/w500${posterPath}`} alt={title} className={styles.poster} />
