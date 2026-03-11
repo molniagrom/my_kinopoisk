@@ -5,7 +5,7 @@ import { type CSSProperties, type SyntheticEvent, useEffect, useState } from 're
 import {
   useFetchSearcheMoviesByTitleQuery,
   useGetPopularMoviesBackdropQuery,
-} from '../../../features/films/moviesApi.ts';
+} from '@/features/films/moviesApi.ts';
 import { getRandomNumber } from '../../utils/utils.ts';
 
 export function Welcome() {

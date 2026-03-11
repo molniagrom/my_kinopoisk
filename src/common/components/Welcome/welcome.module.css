@@ -4,18 +4,19 @@
 .welcome {
   --backdrop-url: none;
 
-  background-image: linear-gradient(rgba(12, 14, 18, 0.82), rgba(12, 14, 18, 0.82)), var(--backdrop-url);
+  background-color: #0c0e12;
+  background-image: linear-gradient(rgba(12, 14, 18, 0.6), rgba(12, 14, 18, 0.6)), var(--backdrop-url);
 
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 180px 0;
+  min-height: 80vh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   transition: background-image 0.5s ease-in-out;
-  border-bottom: 1px solid rgba(168, 169, 173, 0.18);
+  border-bottom: none;
 }
 
 .hero__search {
