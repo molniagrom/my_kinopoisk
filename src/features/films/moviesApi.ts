@@ -1,5 +1,5 @@
 import { baseApi } from '../api/baseApi.ts';
-import type { MovieDetail, MovieQueryParams, MoviesResponse } from './filmsApi.types.ts';
+import type { DiscoverMoviesParams, GenreListResponse, MovieDetail, MovieQueryParams, MoviesResponse } from './filmsApi.types.ts';
 
 export const moviesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -111,6 +111,38 @@ export const moviesApi = baseApi.injectEndpoints({
       }),
       keepUnusedDataFor: 60,
     }),
+
+    getMovieGenres: build.query<GenreListResponse, { language?: string }>({
+      query: ({ language = 'en-US' }) => ({
+        url: '/genre/movie/list',
+        params: {
+          language,
+        },
+      }),
+    }),
+
+    discoverMovies: build.query<MoviesResponse, DiscoverMoviesParams>({
+      query: ({
+        language = 'en-US',
+        page = 1,
+        region = 'US',
+        sort_by = 'popularity.desc',
+        'vote_average.gte': voteAverageGte = 0,
+        'vote_average.lte': voteAverageLte = 10,
+        with_genres,
+      }) => ({
+        url: '/discover/movie',
+        params: {
+          language,
+          page,
+          region,
+          sort_by,
+          'vote_average.gte': voteAverageGte,
+          'vote_average.lte': voteAverageLte,
+          with_genres,
+        },
+      }),
+    }),
   }),
 });
 
@@ -122,4 +154,6 @@ export const {
   useGetPopularMoviesBackdropQuery,
   useFetchSearcheMoviesByTitleQuery,
   useGetMovieByIdQuery,
+  useGetMovieGenresQuery,
+  useDiscoverMoviesQuery,
 } = moviesApi;

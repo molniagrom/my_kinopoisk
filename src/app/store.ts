@@ -4,6 +4,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { baseApi } from '../features/api/baseApi.ts';
 import { moviesSlice } from '../features/films/moviesSlice.ts';
 import { themeReducer } from '../features/theme/themeSlice.ts';
+import { filteredMoviesReducer } from '../features/filteredMovies/filteredMoviesSlice.ts';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     [moviesSlice.name]: moviesSlice.reducer,
     theme: themeReducer,
+    filteredMovies: filteredMoviesReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
 });

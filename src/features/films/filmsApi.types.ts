@@ -26,10 +26,24 @@ export type MoviesResponse = {
   total_results: number;
 };
 
+export type GenreListResponse = {
+  genres: Genre[];
+};
+
 export type MovieQueryParams = {
   language?: string;
   page?: number;
   region?: string;
+};
+
+export type DiscoverMoviesParams = {
+  language?: string;
+  page?: number;
+  region?: string;
+  sort_by?: string;
+  'vote_average.gte'?: number;
+  'vote_average.lte'?: number;
+  with_genres?: string;
 };
 
 export type Genre = {
