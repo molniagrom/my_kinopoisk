@@ -1,5 +1,5 @@
+﻿import type { DiscoverMoviesParams } from '@/features/films/filmsApi.types.ts';
 import { useDiscoverMoviesQuery } from '@/features/films/moviesApi.ts';
-import type { DiscoverMoviesParams } from '@/features/films/filmsApi.types.ts';
 
 type UseFilteredMoviesQueryArgs = {
   page: number;

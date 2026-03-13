@@ -4,7 +4,7 @@ import './App.css';
 import { Routing } from './common/routing/Routing.tsx';
 import Header from './common/components/header/Header.tsx';
 import { Footer } from './common/components/Footer/Footer.tsx';
-import { useAppSelector } from './app/hooks.ts';
+import { useAppSelector } from './common/hooks/useAppHooks.ts';
 import { selectThemeMode } from './features/selectors.ts';
 
 function App() {

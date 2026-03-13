@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
+﻿import { useEffect, useRef } from 'react';
 
-import { useAppDispatch } from '@/app/hooks.ts';
+import { useAppDispatch } from '@/common/hooks/useAppHooks.ts';
 import { setPage } from '@/features/filteredMovies/filteredMoviesSlice.ts';
 
 type UseInfiniteScrollArgs = {

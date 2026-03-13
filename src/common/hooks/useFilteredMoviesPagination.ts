@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef } from 'react';
+﻿import { useEffect, useMemo, useRef } from 'react';
 
-import { useAppDispatch } from '@/app/hooks.ts';
+import { useAppDispatch } from '@/common/hooks/useAppHooks.ts';
 import type { Movie, MoviesResponse } from '@/features/films/filmsApi.types.ts';
 import { appendMovies, resetPagination, setMovies } from '@/features/filteredMovies/filteredMoviesSlice.ts';
 

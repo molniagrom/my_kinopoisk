@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 
-import { useAppDispatch } from '@/app/hooks.ts';
+import { useAppDispatch } from '@/common/hooks/useAppHooks.ts';
 import {
   resetFilters,
   setDebouncedRatingRange,

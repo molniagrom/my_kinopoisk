@@ -15,7 +15,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Path } from '../../routing/paths.ts';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/common/hooks/useAppHooks.ts';
 import { selectThemeMode } from '@/features/selectors.ts';
 import { toggleTheme } from '@/features/theme/themeSlice';
 

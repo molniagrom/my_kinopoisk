@@ -1,13 +1,13 @@
 import s from './filteredMovies.module.css';
-import { useAppSelector } from '@/app/hooks.ts';
+import { useAppSelector } from '@/common/hooks/useAppHooks.ts';
+import { useFilteredMoviesFilters } from '@/common/hooks/useFilteredMoviesFilters.ts';
+import { useFilteredMoviesPagination } from '@/common/hooks/useFilteredMoviesPagination.ts';
+import { useFilteredMoviesQuery } from '@/common/hooks/useFilteredMoviesQuery.ts';
+import { useInfiniteScroll } from '@/common/hooks/useInfiniteScroll.ts';
 import { selectFilteredMovies } from '@/features/selectors.ts';
 import FilteredMoviesHeader from './FilteredMoviesHeader.tsx';
 import FilteredMoviesSidebar from './FilteredMoviesSidebar.tsx';
 import FilteredMoviesResults from './FilteredMoviesResults.tsx';
-import { useFilteredMoviesFilters } from './hooks/useFilteredMoviesFilters.ts';
-import { useFilteredMoviesQuery } from './hooks/useFilteredMoviesQuery.ts';
-import { useFilteredMoviesPagination } from './hooks/useFilteredMoviesPagination.ts';
-import { useInfiniteScroll } from './hooks/useInfiniteScroll.ts';
 
 export const FilteredMovies = () => {
   const { sortBy, ratingRange, debouncedRatingRange, selectedGenres, page, movies } = useAppSelector(selectFilteredMovies);
