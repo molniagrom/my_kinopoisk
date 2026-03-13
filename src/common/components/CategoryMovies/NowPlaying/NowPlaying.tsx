@@ -25,7 +25,7 @@ export const NowPlaying = () => {
 
   return (
     <div>
-      <h2>Now Playing</h2>
+      <h2 className={s.sectionTitle}>Now Playing</h2>
       {!isFetching && allMovies.length === 0 && <EmptyMoviesState />}
       <div className={s.popularMovies}>
         {allMovies

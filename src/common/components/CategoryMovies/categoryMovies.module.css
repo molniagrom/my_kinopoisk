@@ -11,6 +11,13 @@
   padding: 14px;
 }
 
+.sectionTitle {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  text-align: center;
+}
+
 .emptyMoviesState {
   font-size: 14px;
   color: var(--text-muted);

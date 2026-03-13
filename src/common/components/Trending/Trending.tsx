@@ -24,7 +24,7 @@ export const Trending = () => {
 
   return (
     <div className={s.trending}>
-      <h2>Trending</h2>
+      <h2 className={s.sectionTitle}>Trending</h2>
       <FilmSlider>
         {data.results
           .filter((movie) => movie.poster_path !== null)

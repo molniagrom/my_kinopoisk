@@ -112,7 +112,7 @@ export const PopularMovies = () => {
 
   return (
     <div>
-      <h2>Popular Movies</h2>
+      <h2 className={s.sectionTitle}>Popular Movies</h2>
       {!isFetching && allMovies.length === 0 && <EmptyMoviesState />}
       <div className={s.popularMovies}>
         {allMovies

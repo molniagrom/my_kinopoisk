@@ -25,7 +25,7 @@ export const TopRated = () => {
 
   return (
     <div>
-      <h2>Top Rated</h2>
+      <h2 className={s.sectionTitle}>Top Rated</h2>
       {!isFetching && allMovies.length === 0 && <EmptyMoviesState />}
       <div className={s.popularMovies}>
         {allMovies

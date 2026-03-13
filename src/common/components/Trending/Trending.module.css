@@ -6,9 +6,11 @@
   border-top: 1px solid rgba(168, 169, 173, 0.12);
 }
 
-.trending h2 {
-  color: var(--metal-silver-bright);
-  margin-bottom: 12px;
+.sectionTitle {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  text-align: center;
 }
 
 .trending :global(.slider-card-title) {

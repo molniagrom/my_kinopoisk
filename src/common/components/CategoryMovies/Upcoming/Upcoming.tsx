@@ -3,7 +3,7 @@ import Film from '../../Film/Film.tsx';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import { MOVIES_TO_SHOW } from '../../../constants';
-import { useGetUpcomingMoviesQuery } from '../../../../features/films/moviesApi.ts';
+import { useGetUpcomingMoviesQuery } from '@/features/films/moviesApi.ts';
 import { EmptyMoviesState } from '../EmptyMoviesState/EmptyMoviesState.tsx';
 
 export const Upcoming = () => {
@@ -25,7 +25,7 @@ export const Upcoming = () => {
 
   return (
     <div>
-      <h2>Upcoming</h2>
+      <h2 className={s.sectionTitle}>Upcoming</h2>
       {!isFetching && allMovies.length === 0 && <EmptyMoviesState />}
       <div className={s.popularMovies}>
         {allMovies
