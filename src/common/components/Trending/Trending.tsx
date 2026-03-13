@@ -1,4 +1,4 @@
-import { useGetPopularMoviesQuery } from '../../../features/films/moviesApi.ts';
+import { useGetPopularMoviesQuery } from '@/features/films/moviesApi.ts';
 import Film from '../Film/Film.tsx';
 import s from './Trending.module.css';
 import { FilmSlider } from '../FilmSlider/FilmSlider.tsx';

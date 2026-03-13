@@ -1,0 +1,6 @@
+*** Begin Patch
+*** Add File: src/features/filteredMovies/filteredMoviesSelectors.ts
++import type { RootState } from '@/app/store.ts';
++
++export const selectFilteredMovies = (state: RootState) => state.filteredMovies;
+*** End Patch
