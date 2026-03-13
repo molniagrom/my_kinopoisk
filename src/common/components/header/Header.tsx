@@ -16,6 +16,7 @@ import { Path } from '../../routing/paths.ts';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { selectThemeMode } from '@/features/selectors.ts';
 import { toggleTheme } from '@/features/theme/themeSlice';
 
 const navLinks = [
@@ -30,7 +31,7 @@ export const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const dispatch = useAppDispatch();
-  const themeMode = useAppSelector((state) => state.theme.mode);
+  const themeMode = useAppSelector(selectThemeMode);
   const isDarkTheme = themeMode === 'dark';
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {

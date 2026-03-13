@@ -5,9 +5,10 @@ import { Routing } from './common/routing/Routing.tsx';
 import Header from './common/components/header/Header.tsx';
 import { Footer } from './common/components/Footer/Footer.tsx';
 import { useAppSelector } from './app/hooks.ts';
+import { selectThemeMode } from './features/selectors.ts';
 
 function App() {
-  const themeMode = useAppSelector((state) => state.theme.mode);
+  const themeMode = useAppSelector(selectThemeMode);
 
   useEffect(() => {
     const root = document.documentElement;
