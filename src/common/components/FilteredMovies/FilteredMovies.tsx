@@ -5,7 +5,7 @@ import s from './filteredMovies.module.css';
 import Film from '../Film/Film.tsx';
 import { EmptyMoviesState } from '../CategoryMovies/EmptyMoviesState/EmptyMoviesState.tsx';
 import { useDiscoverMoviesQuery, useGetMovieGenresQuery } from '@/features/films/moviesApi.ts';
-import type { DiscoverMoviesParams } from '@/features/films/filmsApi.types.ts';
+import type { DiscoverMoviesParams, Movie } from '@/features/films/filmsApi.types.ts';
 import { SORT_OPTIONS } from '@/common/constants';
 import { useAppDispatch, useAppSelector } from '@/app/hooks.ts';
 import {
@@ -29,6 +29,8 @@ export const FilteredMovies = () => {
   const observerRef = useRef<IntersectionObserver | null>(null);
   // Sentinel element observed at the bottom of the list.
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+  // Keep the latest movies in a ref to avoid effect loops when merging results.
+  const moviesRef = useRef<Movie[]>([]);
 
   // Fetch genres once to render genre filter buttons.
   const { data: genresData, isLoading: isGenresLoading, isError: isGenresError } = useGetMovieGenresQuery({});
@@ -65,6 +67,10 @@ export const FilteredMovies = () => {
   // Main Discover query for filtered movies.
   const { data, isFetching, isError } = useDiscoverMoviesQuery(queryParams);
 
+  useEffect(() => {
+    moviesRef.current = movies;
+  }, [movies]);
+
   // Merge pages into a single movies list for infinite scroll.
   useEffect(() => {
     if (!data?.results) {
@@ -76,11 +82,13 @@ export const FilteredMovies = () => {
       return;
     }
 
-    const existingIds = new Set(movies.map((movie) => movie.id));
+    const existingIds = new Set(moviesRef.current.map((movie) => movie.id));
     const next = data.results.filter((movie) => !existingIds.has(movie.id));
 
-    dispatch(appendMovies(next));
-  }, [data, dispatch, movies, page]);
+    if (next.length > 0) {
+      dispatch(appendMovies(next));
+    }
+  }, [data, dispatch, page]);
 
   // Handle rating slider changes.
   const handleRatingChange = (_event: Event, value: number | number[]) => {
