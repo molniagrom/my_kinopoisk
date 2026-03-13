@@ -1,4 +1,3 @@
-import React from 'react';
 
 import s from './Favorites.module.css';
 import Film from '../Film/Film.tsx';
