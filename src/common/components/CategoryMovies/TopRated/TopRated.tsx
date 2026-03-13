@@ -3,7 +3,7 @@ import Film from '../../Film/Film.tsx';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import { MOVIES_TO_SHOW } from '../../../constants';
-import { useGetTopRatedMoviesQuery } from '../../../../features/films/moviesApi.ts';
+import { useGetTopRatedMoviesQuery } from '@/features/films/moviesApi.ts';
 import { EmptyMoviesState } from '../EmptyMoviesState/EmptyMoviesState.tsx';
 
 export const TopRated = () => {
@@ -25,7 +25,7 @@ export const TopRated = () => {
 
   return (
     <div>
-      <h1>Top Rated</h1>
+      <h2>Top Rated</h2>
       {!isFetching && allMovies.length === 0 && <EmptyMoviesState />}
       <div className={s.popularMovies}>
         {allMovies

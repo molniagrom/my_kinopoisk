@@ -3,7 +3,7 @@ import Film from '../../Film/Film.tsx';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import { MOVIES_TO_SHOW } from '../../../constants';
-import { useGetNowPlayingMoviesQuery } from '../../../../features/films/moviesApi.ts';
+import { useGetNowPlayingMoviesQuery } from '@/features/films/moviesApi.ts';
 import { EmptyMoviesState } from '../EmptyMoviesState/EmptyMoviesState.tsx';
 
 export const NowPlaying = () => {
@@ -25,7 +25,7 @@ export const NowPlaying = () => {
 
   return (
     <div>
-      <h1>Now Playing</h1>
+      <h2>Now Playing</h2>
       {!isFetching && allMovies.length === 0 && <EmptyMoviesState />}
       <div className={s.popularMovies}>
         {allMovies

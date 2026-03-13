@@ -25,7 +25,7 @@ export const Upcoming = () => {
 
   return (
     <div>
-      <h1>Upcoming</h1>
+      <h2>Upcoming</h2>
       {!isFetching && allMovies.length === 0 && <EmptyMoviesState />}
       <div className={s.popularMovies}>
         {allMovies
