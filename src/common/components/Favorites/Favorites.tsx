@@ -2,11 +2,12 @@
 import s from './Favorites.module.css';
 import Film from '../Film/Film.tsx';
 import { getFavorites } from '@/common/utils/favoritesStorage.ts';
+import {useEffect, useState} from "react";
 
 export const Favorites = () => {
-  const [favorites, setFavorites] = React.useState(getFavorites());
+  const [favorites, setFavorites] = useState(getFavorites());
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleFavoritesChange = () => {
       setFavorites(getFavorites());
     };
