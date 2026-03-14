@@ -4,6 +4,7 @@ export const Path = {
   FilteredMovies: '/filteredMovies',
   Search: '/search',
   Favorites: '/favorites',
+  AuthCallback: '/auth/callback',
   MovieDetails: '/movie/:movieId',
   NotFound: '*',
 } as const;

@@ -15,9 +15,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Path } from '../../routing/paths.ts';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import defaultAvatar from '../../../assets/avatardefault_92824.webp';
 import { useAppDispatch, useAppSelector } from '@/common/hooks/useAppHooks.ts';
-import { selectThemeMode } from '@/features/selectors.ts';
+import { selectAuthSessionId, selectIsAuthorized, selectThemeMode } from '@/features/selectors.ts';
 import { toggleTheme } from '@/features/theme/themeSlice';
+import { useCreateRequestTokenMutation, useGetAccountQuery } from '@/features/api/authApi.ts';
+import { clearSession } from '@/features/auth/authSlice.ts';
 
 const navLinks = [
   { label: 'Main', path: Path.Main },
@@ -32,7 +35,24 @@ export const Header = () => {
   const open = Boolean(anchorEl);
   const dispatch = useAppDispatch();
   const themeMode = useAppSelector(selectThemeMode);
+  const isAuthorized = useAppSelector(selectIsAuthorized);
+  const sessionId = useAppSelector(selectAuthSessionId);
   const isDarkTheme = themeMode === 'dark';
+  const [createRequestToken] = useCreateRequestTokenMutation();
+  const { data: accountData } = useGetAccountQuery(
+    { sessionId: sessionId ?? '' },
+    {
+      skip: !sessionId,
+    }
+  );
+
+  const avatarSrc = !isAuthorized
+    ? defaultAvatar
+    : accountData?.avatar?.tmdb?.avatar_path
+      ? `https://image.tmdb.org/t/p/w200${accountData.avatar.tmdb.avatar_path}`
+      : accountData?.avatar?.gravatar?.hash
+        ? `https://www.gravatar.com/avatar/${accountData.avatar.gravatar.hash}`
+        : defaultAvatar;
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -40,6 +60,22 @@ export const Header = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleAuthClick = async () => {
+    if (isAuthorized) {
+      dispatch(clearSession());
+      return;
+    }
+
+    try {
+      const result = await createRequestToken().unwrap();
+      const redirectTo = `${window.location.origin}${Path.AuthCallback}`;
+      const authUrl = `https://www.themoviedb.org/authenticate/${result.request_token}?redirect_to=${encodeURIComponent(redirectTo)}`;
+      window.location.href = authUrl;
+    } catch {
+      // noop: optional toast could be added later
+    }
   };
 
   return (
@@ -57,9 +93,9 @@ export const Header = () => {
         </Box>
         <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
           <AddCircleIcon sx={{ fontSize: 40 }} />
-          <MyAvatar src="https://i.pravatar.cc/150?img=3" alt="User Avatar" size={40} />
-          <Button className={s.logoutButton} variant="contained">
-            log out
+          <MyAvatar src={avatarSrc} alt="User Avatar" size={40} />
+          <Button className={s.logoutButton} variant="contained" onClick={handleAuthClick}>
+            {isAuthorized ? 'log out' : 'log in'}
           </Button>
           <SearchIcon sx={{ fontSize: 30, cursor: 'pointer' }} />
           <NotificationsIcon sx={{ fontSize: 30, cursor: 'pointer' }} />
@@ -107,7 +143,7 @@ export const Header = () => {
               <NotificationsIcon sx={{ mr: 1 }} /> Notifications
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              <MyAvatar src="https://i.pravatar.cc/150?img=3" alt="User Avatar" size={24} />
+              <MyAvatar src={avatarSrc} alt="User Avatar" size={24} />
               <span style={{ marginLeft: '8px' }}>Profile</span>
             </MenuItem>
             <MenuItem
@@ -123,9 +159,14 @@ export const Header = () => {
               )}
               <span style={{ marginLeft: '8px' }}>Toggle theme</span>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                handleAuthClick();
+              }}
+            >
               <Button className={s.logoutButton} variant="contained" size="small" fullWidth>
-                log out
+                {isAuthorized ? 'log out' : 'log in'}
               </Button>
             </MenuItem>
           </Menu>
