@@ -4,11 +4,22 @@ import './App.css';
 import { Routing } from './common/routing/Routing.tsx';
 import Header from './common/components/header/Header.tsx';
 import { Footer } from './common/components/Footer/Footer.tsx';
-import { useAppSelector } from './common/hooks/useAppHooks.ts';
-import { selectThemeMode } from './features/selectors.ts';
+import { useAppDispatch, useAppSelector } from './common/hooks/useAppHooks.ts';
+import { selectAuthAccountId, selectAuthSessionId, selectThemeMode } from './features/selectors.ts';
+import { useGetAccountQuery } from './features/api/authApi.ts';
+import { setAccountId } from './features/auth/authSlice.ts';
 
 function App() {
   const themeMode = useAppSelector(selectThemeMode);
+  const dispatch = useAppDispatch();
+  const sessionId = useAppSelector(selectAuthSessionId);
+  const accountId = useAppSelector(selectAuthAccountId);
+  const { data: accountData } = useGetAccountQuery(
+    { sessionId: sessionId ?? '' },
+    {
+      skip: !sessionId,
+    }
+  );
 
   useEffect(() => {
     const root = document.documentElement;
@@ -18,6 +29,12 @@ function App() {
       root.classList.remove('dark');
     }
   }, [themeMode]);
+
+  useEffect(() => {
+    if (accountData?.id && accountId !== accountData.id) {
+      dispatch(setAccountId(accountData.id));
+    }
+  }, [accountData, accountId, dispatch]);
 
   return (
     <div className="app">
