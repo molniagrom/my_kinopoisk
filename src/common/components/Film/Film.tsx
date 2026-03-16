@@ -9,8 +9,8 @@ import styles from './film.module.css';
 import { moviePagePath } from '../../routing/paths.ts';
 import { useAppSelector } from '@/common/hooks/useAppHooks.ts';
 import { selectAuthAccountId, selectAuthSessionId, selectIsAuthorized } from '@/features/selectors.ts';
-import { useGetAccountFavoritesQuery, useMarkFavoriteMutation } from '@/features/api/authApi.ts';
-import React, {useState} from "react";
+import { useGetMovieAccountStatesQuery, useMarkFavoriteMutation } from '@/features/api/authApi.ts';
+import React, { useState } from 'react';
 
 interface MovieCardProps {
   movieId: number;
@@ -26,14 +26,13 @@ const MovieCard: React.FC<MovieCardProps> = ({ movieId, title, releaseDate, vote
   const sessionId = useAppSelector(selectAuthSessionId);
   const accountId = useAppSelector(selectAuthAccountId);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const { data: favoritesData } = useGetAccountFavoritesQuery(
+  const { data: accountStates } = useGetMovieAccountStatesQuery(
     {
-      accountId: accountId ?? 0,
+      movieId,
       sessionId: sessionId ?? '',
-      page: 1,
     },
     {
-      skip: !isAuthorized,
+      skip: !isAuthorized || !sessionId,
     }
   );
   const [markFavorite] = useMarkFavoriteMutation();
@@ -46,7 +45,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movieId, title, releaseDate, vote
     : '';
 
   const percentage = Math.round(voteAverage * 10);
-  const isFavorite = isAuthorized && Boolean(favoritesData?.results?.some((movie) => movie.id === movieId));
+  const isFavorite = isAuthorized && Boolean(accountStates?.favorite);
 
   const onFavoriteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();

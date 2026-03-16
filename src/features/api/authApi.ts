@@ -24,6 +24,12 @@ type AccountResponse = {
     };
   };
 };
+type MovieAccountStatesResponse = {
+  id: number;
+  favorite: boolean;
+  watchlist: boolean;
+  rated: { value: number } | false;
+};
 // логика аутентификации
 //  - Header.tsx инициирует flow → authApi.ts запрашивает токен → AuthCallback.tsx создаёт session → authSlice.ts хранит → App.tsx подхватывает account →
 const apiKey = import.meta.env.VITE_TMDB_API_KEY;
@@ -72,6 +78,15 @@ export const authApi = baseApi.injectEndpoints({
       }),
       providesTags: ['Favorites'],
     }),
+    getMovieAccountStates: build.query<MovieAccountStatesResponse, { movieId: number; sessionId: string }>({
+      query: ({ movieId, sessionId }) => ({
+        url: `/movie/${movieId}/account_states`,
+        params: {
+          api_key: apiKey,
+          session_id: sessionId,
+        },
+      }),
+    }),
     markFavorite: build.mutation<
       { status_code: number; status_message: string },
       { accountId: number; sessionId: string; mediaId: number; favorite: boolean }
@@ -99,5 +114,6 @@ export const {
   useCreateSessionMutation,
   useGetAccountQuery,
   useGetAccountFavoritesQuery,
+  useGetMovieAccountStatesQuery,
   useMarkFavoriteMutation,
 } = authApi;
