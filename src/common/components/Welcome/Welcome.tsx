@@ -1,20 +1,22 @@
 import s from './welcome.module.css';
-import Autocomplete from '@mui/material/Autocomplete';
-import { TextField } from '@mui/material';
-import { type CSSProperties, type SyntheticEvent, useEffect, useState } from 'react';
-import {
-  useFetchSearcheMoviesByTitleQuery,
-  useGetPopularMoviesBackdropQuery,
-} from '@/features/films/moviesApi.ts';
+import { type CSSProperties, useEffect, useState } from 'react';
+import { useFetchSearcheMoviesByTitleQuery, useGetPopularMoviesBackdropQuery } from '@/features/films/moviesApi.ts';
 import { getRandomNumber } from '../../utils/utils.ts';
+import SearchForm from '../SearchForm/SearchForm.tsx';
+import { useNavigate } from 'react-router-dom';
+import { Path } from '@/common/routing/paths.ts';
 
 export function Welcome() {
   const [inputValue, setInputValue] = useState('');
 
-  const { data } = useFetchSearcheMoviesByTitleQuery({ query: inputValue });
+  const { data: searchData } = useFetchSearcheMoviesByTitleQuery(
+    { query: inputValue },
+    {
+      skip: inputValue.trim() === '',
+    }
+  );
   const { data: popularMoviesData } = useGetPopularMoviesBackdropQuery();
-
-  const foundMovieTitles = data?.results.map((film) => film.original_title) ?? [];
+  const navigate = useNavigate();
 
   const [randomBackdropPath, setRandomBackdropPath] = useState<string | null>(null);
 
@@ -40,9 +42,16 @@ export function Welcome() {
       } as CSSProperties)
     : undefined;
 
-  const onInputChangeHandler = (_event: SyntheticEvent, value: string) => {
-    setInputValue(value);
+  const handleSubmit = () => {
+    const trimmedValue = inputValue.trim();
+    if (!trimmedValue) {
+      return;
+    }
+
+    navigate(`${Path.Search}?query=${encodeURIComponent(trimmedValue)}`);
   };
+
+  const suggestions = searchData?.results.map((movie) => movie.original_title) ?? [];
 
   return (
     <div className={s.welcome} style={welcomeStyle}>
@@ -52,16 +61,16 @@ export function Welcome() {
             <h1>Welcome.</h1>
             <p>Millions of movies, TV shows and people to discover. Explore now.</p>
           </div>
-          <form role="search" className={s.hero__search}>
-            <Autocomplete
-              className={s.autocomplete}
-              onInputChange={onInputChangeHandler}
-              disablePortal
-              options={foundMovieTitles}
-              renderInput={(params) => <TextField {...params} label="Movie" className={s.textField} />}
+          <div className={s.hero__search}>
+            <SearchForm
+              value={inputValue}
+              onChange={setInputValue}
+              onSubmit={handleSubmit}
+              onClear={() => setInputValue('')}
+              placeholder="Enter a movie title"
+              suggestions={suggestions}
             />
-            <button type="submit">Search</button>
-          </form>
+          </div>
         </div>
       </section>
     </div>

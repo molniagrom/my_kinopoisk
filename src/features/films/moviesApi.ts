@@ -93,11 +93,12 @@ export const moviesApi = baseApi.injectEndpoints({
       }),
     }),
 
-    fetchSearcheMoviesByTitle: build.query<MoviesResponse, { query: string }>({
-      query: ({ query }) => ({
+    fetchSearcheMoviesByTitle: build.query<MoviesResponse, { query: string; page?: number }>({
+      query: ({ query, page = 1 }) => ({
         url: '/search/movie',
         params: {
           query,
+          page,
         },
       }),
     }),

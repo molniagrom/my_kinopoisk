@@ -86,6 +86,7 @@ export const authApi = baseApi.injectEndpoints({
           session_id: sessionId,
         },
       }),
+      providesTags: (_result, _error, arg) => [{ type: 'AccountStates', id: arg.movieId }],
     }),
     markFavorite: build.mutation<
       { status_code: number; status_message: string },
@@ -104,7 +105,10 @@ export const authApi = baseApi.injectEndpoints({
           favorite,
         },
       }),
-      invalidatesTags: ['Favorites'],
+      invalidatesTags: (_result, _error, arg) => [
+        'Favorites',
+        { type: 'AccountStates', id: arg.mediaId },
+      ],
     }),
   }),
 });

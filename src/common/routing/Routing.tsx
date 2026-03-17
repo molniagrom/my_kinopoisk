@@ -1,4 +1,3 @@
-import Search from '@mui/icons-material/Search';
 import { CategoryMovies } from '../components/CategoryMovies/CategoryMovies.tsx';
 import FilteredMovies from '../components/FilteredMovies/FilteredMovies.tsx';
 import { Main } from '../components/Main/Main.tsx';
@@ -8,6 +7,7 @@ import { PageNotFound } from '../components/PageNotFound/PageNotFound.tsx';
 import { MovieDetail } from '../components/MovieDetail/MovieDetail.tsx';
 import AuthCallback from '../components/AuthCallback/AuthCallback.tsx';
 import { Path } from './paths.ts';
+import Search from "@/common/components/Search/Search.tsx";
 export const Routing = () => {
   return (
     <Routes>
