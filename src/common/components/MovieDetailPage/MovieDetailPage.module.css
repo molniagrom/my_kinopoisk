@@ -88,19 +88,65 @@
   font-size: 0.85rem;
 }
 
+.section {
+  margin-top: 32px;
+}
+
+.sectionTitle {
+  margin: 0 0 16px;
+  font-size: 1.4rem;
+}
+
+.castGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.castCard {
+  background: rgba(26, 32, 43, 0.7);
+  border-radius: 14px;
+  padding: 12px;
+  border: 1px solid rgba(168, 169, 173, 0.2);
+  display: grid;
+  gap: 10px;
+  text-align: left;
+}
+
+.castPhoto {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  aspect-ratio: 2 / 3;
+}
+
+.castInfo {
+  display: grid;
+  gap: 4px;
+}
+
+.castName {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.castRole {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.similarGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
 .message,
 .loader {
   margin: 64px auto;
   text-align: center;
   color: var(--text-main);
-}
-
-.button {
-  margin-top: 16px;
-}
-
-.poster + .details {
-  flex: none;
 }
 
 @media (max-width: 900px) {

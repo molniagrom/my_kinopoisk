@@ -60,3 +60,16 @@ export type MovieDetail = Movie & {
   status: string;
   tagline: string | null;
 };
+
+export type CastMember = {
+  id: number;
+  name: string;
+  character: string;
+  profile_path: string | null;
+  order: number;
+};
+
+export type MovieCreditsResponse = {
+  id: number;
+  cast: CastMember[];
+};

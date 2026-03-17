@@ -2,20 +2,21 @@ import { Link, useLocation, useParams, type Location } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-import { useGetMovieByIdQuery } from '@/features/films/moviesApi.ts';
+import { useGetMovieByIdQuery, useGetMovieCreditsQuery, useGetSimilarMoviesQuery } from '@/features/films/moviesApi.ts';
 import { Path } from '../../routing/paths.ts';
-import styles from './movieDetail.module.css';
+import styles from './MovieDetailPage.module.css';
+import Film from '../Film/Film.tsx';
+import { ACTOR_PLACEHOLDER, BACKDROP_PLACEHOLDER, POSTER_PLACEHOLDER } from '@/common/constants';
 
-const POSTER_PLACEHOLDER = 'https://placehold.co/500x750?text=No+Poster&background=2a2f33';
-const BACKDROP_PLACEHOLDER = 'https://placehold.co/1200x675?text=No+Backdrop&background=0a0c0f';
-
-export const MovieDetail = () => {
+export const MovieDetailPage = () => {
   const { movieId } = useParams<{ movieId?: string }>();
   const location = useLocation();
   const backTarget = (location.state as { from?: Location } | null)?.from ?? Path.Main;
   const parsedId = Number(movieId);
   const skip = Number.isNaN(parsedId);
   const { data: movie, isFetching } = useGetMovieByIdQuery({ movieId: parsedId }, { skip });
+  const { data: credits } = useGetMovieCreditsQuery({ movieId: parsedId }, { skip });
+  const { data: similarMovies } = useGetSimilarMoviesQuery({ movieId: parsedId }, { skip });
 
   if (skip) {
     return (
@@ -51,6 +52,8 @@ export const MovieDetail = () => {
     : BACKDROP_PLACEHOLDER;
   const releaseYear = movie.release_date ? new Date(movie.release_date).getFullYear() : '—';
   const runtime = movie.runtime ? `${movie.runtime} мин` : '—';
+  const cast = credits?.cast?.slice(0, 6) ?? [];
+  const similar = similarMovies?.results?.filter((item) => item.poster_path !== null).slice(0, 6) ?? [];
 
   return (
     <div className={styles.page}>
@@ -91,16 +94,50 @@ export const MovieDetail = () => {
               <strong>Рейтинг:</strong> {movie.vote_average.toFixed(1)} ({movie.vote_count} голосов)
             </div>
             <div>
-              <strong>Бюджет:</strong>{' '}
-              {movie.budget ? `$${movie.budget.toLocaleString()}` : '—'}
+              <strong>Бюджет:</strong> {movie.budget ? `$${movie.budget.toLocaleString()}` : '—'}
             </div>
             <div>
-              <strong>Сборы:</strong>{' '}
-              {movie.revenue ? `$${movie.revenue.toLocaleString()}` : '—'}
+              <strong>Сборы:</strong> {movie.revenue ? `$${movie.revenue.toLocaleString()}` : '—'}
             </div>
           </div>
+        </div>
+      </div>
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Актеры (в главных ролях)</h2>
+        <div className={styles.castGrid}>
+          {cast.map((actor) => {
+            const actorPhoto = actor.profile_path
+              ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
+              : ACTOR_PLACEHOLDER;
+            return (
+              <div key={actor.id} className={styles.castCard}>
+                <img src={actorPhoto} alt={actor.name} className={styles.castPhoto} />
+                <div className={styles.castInfo}>
+                  <span className={styles.castName}>{actor.name}</span>
+                  <span className={styles.castRole}>{actor.character}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Похожие фильмы</h2>
+        <div className={styles.similarGrid}>
+          {similar.map((item) => (
+            <Film
+              key={item.id}
+              movieId={item.id}
+              title={item.original_title}
+              releaseDate={item.release_date}
+              voteAverage={item.vote_average}
+              posterPath={item.poster_path as string}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
 };
+
+export default MovieDetailPage;

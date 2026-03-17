@@ -1,5 +1,12 @@
 import { baseApi } from '../api/baseApi.ts';
-import type { DiscoverMoviesParams, GenreListResponse, MovieDetail, MovieQueryParams, MoviesResponse } from './filmsApi.types.ts';
+import type {
+  DiscoverMoviesParams,
+  GenreListResponse,
+  MovieCreditsResponse,
+  MovieDetail,
+  MovieQueryParams,
+  MoviesResponse,
+} from './filmsApi.types.ts';
 
 export const moviesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -112,6 +119,23 @@ export const moviesApi = baseApi.injectEndpoints({
       }),
       keepUnusedDataFor: 60,
     }),
+    getMovieCredits: build.query<MovieCreditsResponse, { movieId: number; language?: string }>({
+      query: ({ movieId, language = 'en-US' }) => ({
+        url: `/movie/${movieId}/credits`,
+        params: {
+          language,
+        },
+      }),
+    }),
+    getSimilarMovies: build.query<MoviesResponse, { movieId: number; language?: string; page?: number }>({
+      query: ({ movieId, language = 'en-US', page = 1 }) => ({
+        url: `/movie/${movieId}/similar`,
+        params: {
+          language,
+          page,
+        },
+      }),
+    }),
 
     getMovieGenres: build.query<GenreListResponse, { language?: string }>({
       query: ({ language = 'en-US' }) => ({
@@ -155,6 +179,8 @@ export const {
   useGetPopularMoviesBackdropQuery,
   useFetchSearcheMoviesByTitleQuery,
   useGetMovieByIdQuery,
+  useGetMovieCreditsQuery,
+  useGetSimilarMoviesQuery,
   useGetMovieGenresQuery,
   useDiscoverMoviesQuery,
 } = moviesApi;
