@@ -33,6 +33,19 @@
   text-shadow: 0 4px 16px rgba(0, 0, 0, 0.65);
 }
 
+.text h1 {
+  margin: 0;
+  font-size: 3.4rem;
+  letter-spacing: 0.04em;
+  font-weight: bold;
+}
+
+.text p {
+  margin: 12px 0 20px;
+  font-size: 1.05rem;
+  max-width: 520px;
+}
+
 .content__wrapper {
   display: flex;
   flex-direction: column;
