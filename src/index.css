@@ -147,6 +147,16 @@ h3 {
   color: var(--paper-color) !important;
 }
 
+.MuiAlert-root.MuiPaper-root {
+  background: #c8102e !important;
+  color: #fff !important;
+}
+
+.MuiAlert-root.MuiPaper-root .MuiAlert-icon,
+.MuiAlert-root.MuiPaper-root .MuiAlert-message {
+  color: #fff !important;
+}
+
 .MuiMenuItem-root:hover {
   background-color: var(--menu-hover-bg) !important;
 }

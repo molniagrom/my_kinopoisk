@@ -5,7 +5,8 @@ import { baseApi } from '../features/api/baseApi.ts';
 import { moviesSlice } from '../features/films/moviesSlice.ts';
 import { themeReducer, type ThemeMode } from '../features/theme/themeSlice.ts';
 import { filteredMoviesReducer } from '../features/filteredMovies/filteredMoviesSlice.ts';
-import { THEME_STORAGE_KEY } from '../common/constants';
+import { THEME_STORAGE_KEY } from '@/common/constants';
+import { appReducer, appSlice } from './appSlice.ts';
 
 const getInitialThemeMode = (): ThemeMode => {
   if (typeof window === 'undefined') {
@@ -26,7 +27,7 @@ import { authReducer } from '../features/auth/authSlice.ts';
 export const store = configureStore({
   preloadedState,
   reducer: {
-    // [appSlice.name]: appReducer,
+    [appSlice.name]: appReducer,
     [baseApi.reducerPath]: baseApi.reducer,
     [moviesSlice.name]: moviesSlice.reducer,
     theme: themeReducer,
