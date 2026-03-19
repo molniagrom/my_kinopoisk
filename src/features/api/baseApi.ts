@@ -16,6 +16,12 @@ const getErrorMessage = (error: FetchBaseQueryError) => {
     if (error.status === 'FETCH_ERROR') {
       return 'Network error. Please check your internet connection.';
     }
+    if (error.status === 'PARSING_ERROR') {
+      return error.error || 'Invalid server response.';
+    }
+    if (error.status === 'TIMEOUT_ERROR') {
+      return 'Request timeout. Please try again.';
+    }
     return error.error ?? 'Network error. Please try again.';
   }
 
@@ -24,7 +30,11 @@ const getErrorMessage = (error: FetchBaseQueryError) => {
   }
 
   if (error.status === 401) {
-    return 'Unauthorized. Please check your credentials.';
+    return 'Unauthorized. Please check your AUTH_TOKEN.';
+  }
+
+  if (error.status === 404) {
+    return 'Resource not found (404). Please try again later.';
   }
 
   if (error.status >= 500) {

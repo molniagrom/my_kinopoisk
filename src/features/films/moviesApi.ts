@@ -7,6 +7,13 @@ import type {
   MovieQueryParams,
   MoviesResponse,
 } from './filmsApi.types.ts';
+import {
+  genreListResponseSchema,
+  movieCreditsResponseSchema,
+  movieDetailSchema,
+  moviesResponseSchema,
+} from './filmsApi.schemas.ts';
+import { parseWithSchema } from '@/common/utils';
 
 export const moviesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -30,6 +37,7 @@ export const moviesApi = baseApi.injectEndpoints({
       forceRefetch({ currentArg, previousArg }) {
         return currentArg?.page !== previousArg?.page;
       },
+      transformResponse: (response: unknown) => parseWithSchema(moviesResponseSchema, response),
     }),
     getTopRatedMovies: build.query<MoviesResponse, MovieQueryParams>({
       query: ({ language = 'en-US', page = 1, region = 'US' }) => ({
@@ -49,6 +57,7 @@ export const moviesApi = baseApi.injectEndpoints({
       forceRefetch({ currentArg, previousArg }) {
         return currentArg?.page !== previousArg?.page;
       },
+      transformResponse: (response: unknown) => parseWithSchema(moviesResponseSchema, response),
     }),
     getNowPlayingMovies: build.query<MoviesResponse, MovieQueryParams>({
       query: ({ language = 'en-US', page = 1, region = 'US' }) => ({
@@ -68,6 +77,7 @@ export const moviesApi = baseApi.injectEndpoints({
       forceRefetch({ currentArg, previousArg }) {
         return currentArg?.page !== previousArg?.page;
       },
+      transformResponse: (response: unknown) => parseWithSchema(moviesResponseSchema, response),
     }),
     getUpcomingMovies: build.query<MoviesResponse, MovieQueryParams>({
       query: ({ language = 'en-US', page = 1, region = 'US' }) => ({
@@ -87,6 +97,7 @@ export const moviesApi = baseApi.injectEndpoints({
       forceRefetch({ currentArg, previousArg }) {
         return currentArg?.page !== previousArg?.page;
       },
+      transformResponse: (response: unknown) => parseWithSchema(moviesResponseSchema, response),
     }),
 
     getPopularMoviesBackdrop: build.query<MoviesResponse, void>({
@@ -98,6 +109,7 @@ export const moviesApi = baseApi.injectEndpoints({
           region: 'US',
         },
       }),
+      transformResponse: (response: unknown) => parseWithSchema(moviesResponseSchema, response),
     }),
 
     fetchSearcheMoviesByTitle: build.query<MoviesResponse, { query: string; page?: number }>({
@@ -108,6 +120,7 @@ export const moviesApi = baseApi.injectEndpoints({
           page,
         },
       }),
+      transformResponse: (response: unknown) => parseWithSchema(moviesResponseSchema, response),
     }),
 
     getMovieById: build.query<MovieDetail, { movieId: number; language?: string }>({
@@ -118,6 +131,7 @@ export const moviesApi = baseApi.injectEndpoints({
         },
       }),
       keepUnusedDataFor: 60,
+      transformResponse: (response: unknown) => parseWithSchema(movieDetailSchema, response),
     }),
     getMovieCredits: build.query<MovieCreditsResponse, { movieId: number; language?: string }>({
       query: ({ movieId, language = 'en-US' }) => ({
@@ -126,6 +140,7 @@ export const moviesApi = baseApi.injectEndpoints({
           language,
         },
       }),
+      transformResponse: (response: unknown) => parseWithSchema(movieCreditsResponseSchema, response),
     }),
     getSimilarMovies: build.query<MoviesResponse, { movieId: number; language?: string; page?: number }>({
       query: ({ movieId, language = 'en-US', page = 1 }) => ({
@@ -135,6 +150,7 @@ export const moviesApi = baseApi.injectEndpoints({
           page,
         },
       }),
+      transformResponse: (response: unknown) => parseWithSchema(moviesResponseSchema, response),
     }),
 
     getMovieGenres: build.query<GenreListResponse, { language?: string }>({
@@ -144,6 +160,7 @@ export const moviesApi = baseApi.injectEndpoints({
           language,
         },
       }),
+      transformResponse: (response: unknown) => parseWithSchema(genreListResponseSchema, response),
     }),
 
     discoverMovies: build.query<MoviesResponse, DiscoverMoviesParams>({
@@ -167,6 +184,7 @@ export const moviesApi = baseApi.injectEndpoints({
           with_genres,
         },
       }),
+      transformResponse: (response: unknown) => parseWithSchema(moviesResponseSchema, response),
     }),
   }),
 });

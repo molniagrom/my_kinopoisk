@@ -1,5 +1,14 @@
 import { baseApi } from './baseApi.ts';
 import type { MoviesResponse } from '../films/filmsApi.types.ts';
+import {
+  accountResponseSchema,
+  markFavoriteResponseSchema,
+  movieAccountStatesSchema,
+  requestTokenResponseSchema,
+  sessionResponseSchema,
+} from '../auth/authApi.schemas.ts';
+import { moviesResponseSchema } from '../films/filmsApi.schemas.ts';
+import { parseWithSchema } from '@/common/utils';
 
 type RequestTokenResponse = {
   success: boolean;
@@ -43,6 +52,7 @@ export const authApi = baseApi.injectEndpoints({
           api_key: apiKey,
         },
       }),
+      transformResponse: (response: unknown) => parseWithSchema(requestTokenResponseSchema, response),
     }),
     createSession: build.mutation<SessionResponse, { requestToken: string }>({
       query: ({ requestToken }) => ({
@@ -55,6 +65,7 @@ export const authApi = baseApi.injectEndpoints({
           request_token: requestToken,
         },
       }),
+      transformResponse: (response: unknown) => parseWithSchema(sessionResponseSchema, response),
     }),
     getAccount: build.query<AccountResponse, { sessionId: string }>({
       query: ({ sessionId }) => ({
@@ -64,6 +75,7 @@ export const authApi = baseApi.injectEndpoints({
           session_id: sessionId,
         },
       }),
+      transformResponse: (response: unknown) => parseWithSchema(accountResponseSchema, response),
     }),
     getAccountFavorites: build.query<MoviesResponse, { accountId: number; sessionId: string; page?: number }>({
       query: ({ accountId, sessionId, page = 1 }) => ({
@@ -77,6 +89,7 @@ export const authApi = baseApi.injectEndpoints({
         },
       }),
       providesTags: ['Favorites'],
+      transformResponse: (response: unknown) => parseWithSchema(moviesResponseSchema, response),
     }),
     getMovieAccountStates: build.query<MovieAccountStatesResponse, { movieId: number; sessionId: string }>({
       query: ({ movieId, sessionId }) => ({
@@ -87,6 +100,7 @@ export const authApi = baseApi.injectEndpoints({
         },
       }),
       providesTags: (_result, _error, arg) => [{ type: 'AccountStates', id: arg.movieId }],
+      transformResponse: (response: unknown) => parseWithSchema(movieAccountStatesSchema, response),
     }),
     markFavorite: build.mutation<
       { status_code: number; status_message: string },
@@ -109,6 +123,7 @@ export const authApi = baseApi.injectEndpoints({
         'Favorites',
         { type: 'AccountStates', id: arg.mediaId },
       ],
+      transformResponse: (response: unknown) => parseWithSchema(markFavoriteResponseSchema, response),
     }),
   }),
 });
