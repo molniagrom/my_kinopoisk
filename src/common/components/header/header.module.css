@@ -32,9 +32,9 @@
 }
 
 .logoutButton {
-  background: linear-gradient(135deg, var(--decepticon-purple) 0%, var(--decepticon-purple-bright) 100%) !important;
+  background: var(--cta-bg) !important;
 }
 
 .logoutButton:hover {
-  box-shadow: 0 0 18px rgba(111, 45, 168, 0.45);
+  box-shadow: var(--cta-shadow);
 }

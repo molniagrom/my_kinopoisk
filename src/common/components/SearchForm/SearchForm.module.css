@@ -13,8 +13,8 @@
   width: 100%;
   padding: 12px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(168, 169, 173, 0.4);
-  background: rgba(26, 32, 43, 0.9);
+  border: 1px solid var(--surface-border-strong);
+  background: var(--surface-1);
   color: var(--text-main);
   font-size: 14px;
 }
@@ -44,8 +44,8 @@
   left: 0;
   right: 0;
   top: calc(100% + 6px);
-  background: rgba(26, 32, 43, 0.98);
-  border: 1px solid rgba(168, 169, 173, 0.4);
+  background: var(--surface-1);
+  border: 1px solid var(--surface-border);
   border-radius: 12px;
   padding: 6px;
   display: grid;

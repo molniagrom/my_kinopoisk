@@ -9,22 +9,48 @@
   font-family: 'Segoe UI', 'Tahoma', 'Verdana', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #e5e6ea;
-  background-color: #0f1114;
-  --metal-black: #0f1114;
-  --metal-black-soft: #1a202b;
-  --gunmetal-dark: #2c2f33;
-  --gunmetal-main: #363b40;
-  --gunmetal-light: #4a4a4a;
-  --metal-silver: #a8a9ad;
-  --metal-silver-bright: #bebebe;
+  color: #1f2933;
+  background-color: #f5f6f8;
+  --metal-black: #f5f6f8;
+  --metal-black-soft: #e9edf3;
+  --gunmetal-dark: #f0f2f6;
+  --gunmetal-main: #e5e8ee;
+  --gunmetal-light: #d6dbe3;
+  --metal-silver: #6b7280;
+  --metal-silver-bright: #2f3742;
   --decepticon-purple: #5e2a84;
   --decepticon-purple-alt: #6f2da8;
   --decepticon-purple-bright: #8712b6;
   --crimson-red: #781518;
   --crimson-red-bright: #c8102e;
-  --text-main: #e5e6ea;
-  --text-muted: #b6b8bf;
+  --text-main: #1f2933;
+  --text-muted: #6b7280;
+  --appbar-bg: linear-gradient(180deg, #ffffff 0%, #f1f3f7 100%);
+  --appbar-border: rgba(17, 24, 39, 0.08);
+  --appbar-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+  --paper-bg: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%);
+  --paper-color: #1f2933;
+  --button-border: rgba(17, 24, 39, 0.12);
+  --button-text: #1f2933;
+  --menu-hover-bg: rgba(111, 45, 168, 0.12);
+  --icon-color: #3b4250;
+  --input-color: #1f2933;
+  --autocomplete-border: rgba(111, 45, 168, 0.35);
+  --autocomplete-option-bg: rgba(111, 45, 168, 0.18);
+  --cta-bg: linear-gradient(135deg, #5e2a84 0%, #8712b6 100%);
+  --cta-shadow: 0 0 14px rgba(111, 45, 168, 0.24);
+  --surface-1: #ffffff;
+  --surface-2: rgba(255, 255, 255, 0.50);
+  --surface-3: rgba(238, 241, 246, 0.50);
+  --surface-border: rgba(31, 41, 51, 0.12);
+  --surface-border-strong: rgba(31, 41, 51, 0.22);
+  --surface-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+  --surface-shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --chip-bg: rgba(31, 41, 51, 0.06);
+  --page-bg: linear-gradient(180deg, #f7f8fb 0%, #eef1f6 100%);
+  --page-bg-overlay:
+    radial-gradient(circle at 12% 18%, rgba(111, 45, 168, 0.12), transparent 44%),
+    radial-gradient(circle at 88% 10%, rgba(120, 21, 24, 0.08), transparent 36%);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -69,10 +95,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   color: var(--text-main);
-  background:
-    radial-gradient(circle at 12% 18%, rgba(111, 45, 168, 0.2), transparent 44%),
-    radial-gradient(circle at 88% 10%, rgba(120, 21, 24, 0.14), transparent 36%),
-    linear-gradient(180deg, var(--gunmetal-dark) 0%, var(--metal-black) 65%, #0a0c0f 100%);
+  background: var(--page-bg-overlay), var(--page-bg);
 }
 
 a {
@@ -88,15 +111,15 @@ h3 {
 }
 
 .MuiAppBar-root {
-  background: linear-gradient(180deg, #43484f 0%, #2c2f33 100%) !important;
-  border-bottom: 1px solid rgba(168, 169, 173, 0.2);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4) !important;
+  background: var(--appbar-bg) !important;
+  border-bottom: 1px solid var(--appbar-border);
+  box-shadow: var(--appbar-shadow) !important;
 }
 
 .MuiButton-root {
   border-radius: 10px !important;
-  border: 1px solid rgba(168, 169, 173, 0.28) !important;
-  color: var(--metal-silver-bright) !important;
+  border: 1px solid var(--button-border) !important;
+  color: var(--button-text) !important;
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
 }
@@ -116,31 +139,69 @@ h3 {
 
 .MuiIconButton-root,
 .MuiSvgIcon-root {
-  color: var(--metal-silver-bright);
+  color: var(--icon-color);
 }
 
 .MuiPaper-root {
-  background: linear-gradient(180deg, #33383e 0%, #24282d 100%) !important;
-  color: var(--metal-silver-bright) !important;
+  background: var(--paper-bg) !important;
+  color: var(--paper-color) !important;
 }
 
 .MuiMenuItem-root:hover {
-  background-color: rgba(111, 45, 168, 0.2) !important;
+  background-color: var(--menu-hover-bg) !important;
 }
 
 .MuiOutlinedInput-root {
-  color: var(--metal-silver-bright) !important;
+  color: var(--input-color) !important;
 }
 
 .MuiAutocomplete-popper .MuiPaper-root {
-  border: 1px solid rgba(111, 45, 168, 0.45);
+  border: 1px solid var(--autocomplete-border);
 }
 
 .MuiAutocomplete-option[data-focus='true'] {
-  background-color: rgba(111, 45, 168, 0.22) !important;
+  background-color: var(--autocomplete-option-bg) !important;
 }
 
 .dark {
+  color: #e5e6ea;
+  background-color: #0f1114;
+  --metal-black: #0f1114;
+  --metal-black-soft: #1a202b;
+  --gunmetal-dark: #2c2f33;
+  --gunmetal-main: #363b40;
+  --gunmetal-light: #4a4a4a;
+  --metal-silver: #a8a9ad;
+  --metal-silver-bright: #bebebe;
+  --text-main: #e5e6ea;
+  --text-muted: #b6b8bf;
+  --appbar-bg: linear-gradient(180deg, #43484f 0%, #2c2f33 100%);
+  --appbar-border: rgba(168, 169, 173, 0.2);
+  --appbar-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+  --paper-bg: linear-gradient(180deg, #33383e 0%, #24282d 100%);
+  --paper-color: var(--metal-silver-bright);
+  --button-border: rgba(168, 169, 173, 0.28);
+  --button-text: var(--metal-silver-bright);
+  --menu-hover-bg: rgba(111, 45, 168, 0.2);
+  --icon-color: var(--metal-silver-bright);
+  --input-color: var(--metal-silver-bright);
+  --autocomplete-border: rgba(111, 45, 168, 0.45);
+  --autocomplete-option-bg: rgba(111, 45, 168, 0.22);
+  --cta-bg: linear-gradient(135deg, #4d1f70 0%, #8712b6 100%);
+  --cta-shadow: 0 0 18px rgba(111, 45, 168, 0.45);
+  --surface-1: #1a202b;
+  --surface-2: rgba(44, 47, 51, 0.9);
+  --surface-3: rgba(54, 59, 64, 0.95);
+  --surface-border: rgba(168, 169, 173, 0.24);
+  --surface-border-strong: rgba(168, 169, 173, 0.4);
+  --surface-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  --surface-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --chip-bg: rgba(255, 255, 255, 0.05);
+  --page-bg:
+    linear-gradient(180deg, var(--gunmetal-dark) 0%, var(--metal-black) 65%, #0a0c0f 100%);
+  --page-bg-overlay:
+    radial-gradient(circle at 12% 18%, rgba(111, 45, 168, 0.2), transparent 44%),
+    radial-gradient(circle at 88% 10%, rgba(120, 21, 24, 0.14), transparent 36%);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);

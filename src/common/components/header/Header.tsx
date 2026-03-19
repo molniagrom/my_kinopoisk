@@ -1,26 +1,26 @@
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import tmdbLogo from '../../../assets/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import tmdbLogo
+  from '../../../assets/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MyAvatar from '../MyAvatar/MyAvatar';
 import s from './header.module.css';
-import { useState } from 'react';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import {useState} from 'react';
+import {IconButton, Menu, MenuItem} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Path } from '../../routing/paths.ts';
+import {Path} from '../../routing/paths.ts';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import defaultAvatar from '../../../assets/avatardefault_92824.webp';
-import { useAppDispatch, useAppSelector } from '@/common/hooks/useAppHooks.ts';
-import { selectAuthSessionId, selectIsAuthorized, selectThemeMode } from '@/features/selectors.ts';
-import { toggleTheme } from '@/features/theme/themeSlice';
-import { useCreateRequestTokenMutation, useGetAccountQuery } from '@/features/api/authApi.ts';
-import { clearSession } from '@/features/auth/authSlice.ts';
+import {useAppDispatch, useAppSelector} from '@/common/hooks/useAppHooks.ts';
+import {selectAuthSessionId, selectIsAuthorized, selectThemeMode} from '@/features/selectors.ts';
+import {toggleTheme} from '@/features/theme/themeSlice';
+import {useCreateRequestTokenMutation, useGetAccountQuery} from '@/features/api/authApi.ts';
+import {clearSession} from '@/features/auth/authSlice.ts';
 
 const navLinks = [
   { label: 'Main', path: Path.Main },
@@ -92,7 +92,6 @@ export const Header = () => {
           </Box>
         </Box>
         <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
-          <AddCircleIcon sx={{ fontSize: 40 }} />
           <MyAvatar src={avatarSrc} alt="User Avatar" size={40} />
           <Button className={s.logoutButton} variant="contained" onClick={handleAuthClick}>
             {isAuthorized ? 'log out' : 'log in'}
@@ -133,9 +132,7 @@ export const Header = () => {
                 {link.label}
               </MenuItem>
             ))}
-            <MenuItem onClick={handleClose}>
-              <AddCircleIcon sx={{ mr: 1 }} /> Add
-            </MenuItem>
+
             <MenuItem onClick={handleClose}>
               <SearchIcon sx={{ mr: 1 }} /> Search
             </MenuItem>

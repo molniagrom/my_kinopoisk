@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from './common/hooks/useAppHooks.ts';
 import { selectAuthAccountId, selectAuthSessionId, selectThemeMode } from './features/selectors.ts';
 import { useGetAccountQuery } from './features/api/authApi.ts';
 import { setAccountId } from './features/auth/authSlice.ts';
+import { THEME_STORAGE_KEY } from './common/constants';
 
 function App() {
   const themeMode = useAppSelector(selectThemeMode);
@@ -28,6 +29,7 @@ function App() {
     } else {
       root.classList.remove('dark');
     }
+    window.localStorage.setItem(THEME_STORAGE_KEY, themeMode);
   }, [themeMode]);
 
   useEffect(() => {
