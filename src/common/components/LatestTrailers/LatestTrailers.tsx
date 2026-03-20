@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   useGetPopularMoviesQuery,
   useGetTvOnTheAirQuery,
@@ -8,6 +8,8 @@ import {
 import TrailerCard from './TrailerCard.tsx';
 
 const tabs = ['Popular', 'Streaming', 'On TV', 'For Rent', 'In Theaters'];
+const streamingProviderNames = ['Netflix', 'Amazon Prime Video', 'Disney Plus', 'Hulu', 'Max', 'Paramount Plus'];
+const rentProviderNames = ['Apple TV', 'Amazon Video', 'Google Play Movies', 'Vudu', 'Microsoft Store', 'YouTube'];
 
 const formatDate = (value: string) =>
   new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value));
@@ -40,32 +42,43 @@ export const LatestTrailers = () => {
     return map;
   }, [watchProviders]);
 
-  const streamingProviderNames = [
-    'Netflix',
-    'Amazon Prime Video',
-    'Disney Plus',
-    'Hulu',
-    'Max',
-    'Paramount Plus',
-  ];
-  const rentProviderNames = ['Apple TV', 'Amazon Video', 'Google Play Movies', 'Vudu', 'Microsoft Store', 'YouTube'];
+  const [cachedProviderIds] = useState<{ streaming: string; rent: string }>(() => {
+    if (typeof window === 'undefined') return { streaming: '', rent: '' };
+    const raw = window.localStorage.getItem('providerIds:us');
+    if (!raw) return { streaming: '', rent: '' };
+    try {
+      return JSON.parse(raw) as { streaming: string; rent: string };
+    } catch {
+      return { streaming: '', rent: '' };
+    }
+  });
 
-  const streamingProviderIds = useMemo(
-    () =>
+  const streamingProviderIds = useMemo(() => {
+    const value =
       streamingProviderNames
         .map((name) => providerMap.get(name))
         .filter((id): id is number => Boolean(id))
-        .join('|'),
-    [providerMap]
-  );
-  const rentProviderIds = useMemo(
-    () =>
+        .join('|') || cachedProviderIds.streaming;
+    return value;
+  }, [providerMap, cachedProviderIds.streaming]);
+
+  const rentProviderIds = useMemo(() => {
+    const value =
       rentProviderNames
         .map((name) => providerMap.get(name))
         .filter((id): id is number => Boolean(id))
-        .join('|'),
-    [providerMap]
-  );
+        .join('|') || cachedProviderIds.rent;
+    return value;
+  }, [providerMap, cachedProviderIds.rent]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!streamingProviderIds && !rentProviderIds) return;
+    window.localStorage.setItem(
+      'providerIds:us',
+      JSON.stringify({ streaming: streamingProviderIds, rent: rentProviderIds })
+    );
+  }, [streamingProviderIds, rentProviderIds]);
 
   const today = useMemo(() => new Date(), []);
   const releaseEnd = useMemo(() => today.toISOString().slice(0, 10), [today]);
