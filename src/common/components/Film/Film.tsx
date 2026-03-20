@@ -9,8 +9,8 @@ import styles from './film.module.css';
 import { moviePagePath } from '../../routing/paths.ts';
 import { useAppSelector } from '@/common/hooks/useAppHooks.ts';
 import { selectAuthAccountId, selectAuthSessionId, selectIsAuthorized } from '@/features/selectors.ts';
-import { useGetMovieAccountStatesQuery, useMarkFavoriteMutation } from '@/features/api/authApi.ts';
-import React, { useState } from 'react';
+import { authApi, useMarkFavoriteMutation } from '@/features/api/authApi.ts';
+import React, { useEffect, useState } from 'react';
 
 interface MovieCardProps {
   movieId: number;
@@ -26,15 +26,18 @@ const MovieCard: React.FC<MovieCardProps> = ({ movieId, title, releaseDate, vote
   const sessionId = useAppSelector(selectAuthSessionId);
   const accountId = useAppSelector(selectAuthAccountId);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const { data: accountStates } = useGetMovieAccountStatesQuery(
-    {
-      movieId,
-      sessionId: sessionId ?? '',
-    },
-    {
-      skip: !isAuthorized || !sessionId,
-    }
+  const favoritesCache = useAppSelector((state) =>
+    accountId && sessionId
+      ? authApi.endpoints.getAccountFavorites.select({ accountId, sessionId, page: 1 })(state).data?.results
+      : undefined
   );
+  const cachedFavorite = Boolean(favoritesCache?.some((movie) => movie.id === movieId));
+  const [isFavoriteLocal, setIsFavoriteLocal] = useState(cachedFavorite);
+
+  useEffect(() => {
+    setIsFavoriteLocal(cachedFavorite);
+  }, [cachedFavorite]);
+
   const [markFavorite] = useMarkFavoriteMutation();
   const formattedDate = releaseDate
     ? new Date(releaseDate).toLocaleDateString('en-US', {
@@ -45,9 +48,9 @@ const MovieCard: React.FC<MovieCardProps> = ({ movieId, title, releaseDate, vote
     : '';
 
   const percentage = Math.round(voteAverage * 10);
-  const isFavorite = isAuthorized && Boolean(accountStates?.favorite);
+  const isFavorite = isAuthorized && isFavoriteLocal;
 
-  const onFavoriteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onFavoriteClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
     if (!isAuthorized) {
@@ -56,7 +59,13 @@ const MovieCard: React.FC<MovieCardProps> = ({ movieId, title, releaseDate, vote
     }
 
     if (sessionId && accountId) {
-      markFavorite({ accountId, sessionId, mediaId: movieId, favorite: !isFavorite });
+      const nextFavorite = !isFavorite;
+      setIsFavoriteLocal(nextFavorite);
+      try {
+        await markFavorite({ accountId, sessionId, mediaId: movieId, favorite: nextFavorite }).unwrap();
+      } catch {
+        setIsFavoriteLocal(!nextFavorite);
+      }
     }
   };
 
