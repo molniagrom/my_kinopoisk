@@ -76,7 +76,7 @@
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 0 16px 12px;
+  padding: 10px 16px 12px;
   background: var(--surface-1);
   border-top: 1px solid var(--surface-border);
   animation: searchRowEnter 0.24s ease;
@@ -117,6 +117,6 @@
   }
 
   .searchRowOpen {
-    padding: 0 12px 10px;
+    padding: 10px 12px 10px;
   }
 }
