@@ -102,7 +102,7 @@ export const watchProviderSchema = z.object({
   provider_name: z.string(),
   logo_path: z.string().nullable().optional(),
   display_priority: z.number().optional(),
-  display_priorities: z.record(z.number()).optional(),
+  display_priorities: z.record(z.string(), z.number()).optional(),
 });
 
 export const watchProvidersResponseSchema = z.object({
