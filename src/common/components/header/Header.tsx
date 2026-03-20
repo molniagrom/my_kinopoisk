@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
@@ -10,7 +10,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MyAvatar from '../MyAvatar/MyAvatar';
 import s from './header.module.css';
 import {useState} from 'react';
-import {IconButton, Menu, MenuItem} from '@mui/material';
+import { IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Path} from '../../routing/paths.ts';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
@@ -21,6 +21,10 @@ import {selectAuthSessionId, selectIsAuthorized, selectThemeMode} from '@/featur
 import {toggleTheme} from '@/features/theme/themeSlice';
 import {useCreateRequestTokenMutation, useGetAccountQuery} from '@/features/api/authApi.ts';
 import {clearSession} from '@/features/auth/authSlice.ts';
+import {setAppError} from '@/app/appSlice.ts';
+import SearchForm from '../SearchForm/SearchForm.tsx';
+import { useFetchSearcheMoviesByTitleQuery } from '@/features/films/moviesApi.ts';
+import CloseIcon from '@mui/icons-material/Close';
 
 const navLinks = [
   { label: 'Main', path: Path.Main },
@@ -38,6 +42,9 @@ export const Header = () => {
   const isAuthorized = useAppSelector(selectIsAuthorized);
   const sessionId = useAppSelector(selectAuthSessionId);
   const isDarkTheme = themeMode === 'dark';
+  const navigate = useNavigate();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const [createRequestToken] = useCreateRequestTokenMutation();
   const { data: accountData } = useGetAccountQuery(
     { sessionId: sessionId ?? '' },
@@ -74,8 +81,29 @@ export const Header = () => {
       const authUrl = `https://www.themoviedb.org/authenticate/${result.request_token}?redirect_to=${encodeURIComponent(redirectTo)}`;
       window.location.href = authUrl;
     } catch {
-      // noop: optional toast could be added later
+      dispatch(setAppError('Не удалось начать авторизацию. Попробуйте снова.'));
     }
+  };
+
+  const { data: suggestionsData } = useFetchSearcheMoviesByTitleQuery(
+    { query: searchValue },
+    { skip: !isSearchOpen || searchValue.trim() === '' }
+  );
+
+  const suggestions = suggestionsData?.results.map((movie) => movie.original_title) ?? [];
+
+  const handleSearchSubmit = () => {
+    const trimmed = searchValue.trim();
+    if (!trimmed) {
+      navigate(Path.Search);
+      return;
+    }
+    navigate(`${Path.Search}?query=${encodeURIComponent(trimmed)}`);
+  };
+
+  const handleSearchClear = () => {
+    setSearchValue('');
+    navigate(Path.Search);
   };
 
   return (
@@ -91,21 +119,27 @@ export const Header = () => {
             ))}
           </Box>
         </Box>
-        <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
-          <MyAvatar src={avatarSrc} alt="User Avatar" size={40} />
-          <Button className={s.logoutButton} variant="contained" onClick={handleAuthClick}>
-            {isAuthorized ? 'log out' : 'log in'}
-          </Button>
-          <SearchIcon sx={{ fontSize: 30, cursor: 'pointer' }} />
-          <NotificationsIcon sx={{ fontSize: 30, cursor: 'pointer' }} />
-          <IconButton
-            color="inherit"
-            aria-label="toggle theme"
-            onClick={() => dispatch(toggleTheme())}
-            size="large"
-          >
-            {isDarkTheme ? <LightModeIcon /> : <Brightness4Icon />}
-          </IconButton>
+        <Box className={s.rightArea} sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
+          <Box className={isSearchOpen ? s.actionsHidden : s.actions} aria-hidden={isSearchOpen}>
+            <MyAvatar src={avatarSrc} alt="User Avatar" size={40} />
+            <Button className={s.logoutButton} variant="contained" onClick={handleAuthClick}>
+              {isAuthorized ? 'log out' : 'log in'}
+            </Button>
+            {/*<Button color="inherit" variant="outlined" >*/}
+            {/*  {isSearchOpen ? 'Close Search' : 'Open Search'}*/}
+            {/*</Button>*/}
+            <SearchIcon sx={{ fontSize: 30, cursor: 'pointer' }} onClick={() => setIsSearchOpen((prev) => !prev)} />
+
+            <NotificationsIcon sx={{ fontSize: 30, cursor: 'pointer' }} />
+            <IconButton
+              color="inherit"
+              aria-label="toggle theme"
+              onClick={() => dispatch(toggleTheme())}
+              size="large"
+            >
+              {isDarkTheme ? <LightModeIcon /> : <Brightness4Icon />}
+            </IconButton>
+          </Box>
         </Box>
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
           <IconButton size="large" edge="end" color="inherit" aria-label="menu" onClick={handleMenu}>
@@ -133,7 +167,12 @@ export const Header = () => {
               </MenuItem>
             ))}
 
-            <MenuItem onClick={handleClose}>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                setIsSearchOpen(true);
+              }}
+            >
               <SearchIcon sx={{ mr: 1 }} /> Search
             </MenuItem>
             <MenuItem onClick={handleClose}>
@@ -169,6 +208,26 @@ export const Header = () => {
           </Menu>
         </Box>
       </Toolbar>
+      <Box
+        className={isSearchOpen ? s.searchRowOpen : s.searchRow}
+        sx={{ display: isSearchOpen ? 'flex' : 'none' }}
+      >
+        <Box sx={{ color: 'red', fontWeight: 700, mr: 2 }}>SEARCH OPEN</Box>
+        <div className={s.searchFormWrap}>
+          <SearchForm
+            value={searchValue}
+            onChange={setSearchValue}
+            onSubmit={handleSearchSubmit}
+            onClear={handleSearchClear}
+            placeholder="Search movies..."
+            buttonLabel="Go"
+            suggestions={suggestions}
+          />
+        </div>
+        <IconButton aria-label="close search" onClick={() => setIsSearchOpen(false)} size="small">
+          <CloseIcon />
+        </IconButton>
+      </Box>
     </AppBar>
   );
 };
