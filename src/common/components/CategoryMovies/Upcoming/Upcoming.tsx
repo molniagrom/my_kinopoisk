@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { MOVIES_TO_SHOW } from '../../../constants';
 import { useGetUpcomingMoviesQuery } from '@/features/films/moviesApi.ts';
 import { EmptyMoviesState } from '../EmptyMoviesState/EmptyMoviesState.tsx';
+import MovieCardSkeleton from '../../Skeletons/MovieCardSkeleton.tsx';
 
 export const Upcoming = () => {
   const [visibleCount, setVisibleCount] = useState(MOVIES_TO_SHOW);
@@ -28,6 +29,9 @@ export const Upcoming = () => {
       <h2 className={s.sectionTitle}>Upcoming</h2>
       {!isFetching && allMovies.length === 0 && <EmptyMoviesState />}
       <div className={s.popularMovies}>
+        {isFetching && allMovies.length === 0
+          ? Array.from({ length: 6 }).map((_, index) => <MovieCardSkeleton key={`up-skel-${index}`} />)
+          : null}
         {allMovies
           .slice(0, visibleCount)
           .filter((movie) => movie.poster_path !== null)

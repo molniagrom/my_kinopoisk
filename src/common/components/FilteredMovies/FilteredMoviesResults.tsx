@@ -5,6 +5,7 @@ import s from './filteredMovies.module.css';
 import Film from '../Film/Film.tsx';
 import { EmptyMoviesState } from '../CategoryMovies/EmptyMoviesState/EmptyMoviesState.tsx';
 import type { Movie } from '@/features/films/filmsApi.types.ts';
+import MovieCardSkeleton from '../Skeletons/MovieCardSkeleton.tsx';
 
 type FilteredMoviesResultsProps = {
   movies: Movie[];
@@ -20,6 +21,9 @@ const FilteredMoviesResults = (
     {isError && <p className={s.errorText}>Could not load movies. Try adjusting filters.</p>}
     {!isFetching && movies.length === 0 && <EmptyMoviesState />}
     <div className={s.grid}>
+      {isFetching && movies.length === 0
+        ? Array.from({ length: 8 }).map((_, index) => <MovieCardSkeleton key={`skeleton-${index}`} />)
+        : null}
       {movies
         .filter((movie) => movie.poster_path !== null)
         .map((movie) => (

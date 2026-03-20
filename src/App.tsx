@@ -5,13 +5,20 @@ import { Routing } from './common/routing/Routing.tsx';
 import Header from './common/components/header/Header.tsx';
 import { Footer } from './common/components/Footer/Footer.tsx';
 import { useAppDispatch, useAppSelector } from './common/hooks/useAppHooks.ts';
-import { selectAppError, selectAuthAccountId, selectAuthSessionId, selectThemeMode } from './features/selectors.ts';
+import {
+  selectAppError,
+  selectAuthAccountId,
+  selectAuthSessionId,
+  selectIsRequesting,
+  selectThemeMode,
+} from './features/selectors.ts';
 import { useGetAccountQuery } from './features/api/authApi.ts';
 import { setAccountId } from './features/auth/authSlice.ts';
 import { THEME_STORAGE_KEY } from './common/constants';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { clearAppError } from './app/appSlice.ts';
+import LinearProgress from '@mui/material/LinearProgress';
 
 function App() {
   const themeMode = useAppSelector(selectThemeMode);
@@ -19,6 +26,7 @@ function App() {
   const sessionId = useAppSelector(selectAuthSessionId);
   const accountId = useAppSelector(selectAuthAccountId);
   const appError = useAppSelector(selectAppError);
+  const isRequesting = useAppSelector(selectIsRequesting);
   const { data: accountData } = useGetAccountQuery(
     { sessionId: sessionId ?? '' },
     {
@@ -52,6 +60,7 @@ function App() {
   return (
     <div className="app">
       <Header />
+      {isRequesting && <LinearProgress />}
       <main className="appMain">
         <Routing />
       </main>

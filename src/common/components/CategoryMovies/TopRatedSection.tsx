@@ -1,17 +1,17 @@
-import s from '../categoryMovies.module.css';
-import Film from '../../Film/Film.tsx';
+import s from './categoryMovies.module.css';
+import Film from '../Film/Film.tsx';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
-import { MOVIES_TO_SHOW } from '../../../constants';
-import { useGetNowPlayingMoviesQuery } from '@/features/films/moviesApi.ts';
-import { EmptyMoviesState } from '../EmptyMoviesState/EmptyMoviesState.tsx';
-import MovieCardSkeleton from '../../Skeletons/MovieCardSkeleton.tsx';
+import { MOVIES_TO_SHOW } from '../../constants';
+import { useGetTopRatedMoviesQuery } from '@/features/films/moviesApi.ts';
+import { EmptyMoviesState } from './EmptyMoviesState/EmptyMoviesState.tsx';
+import MovieCardSkeleton from '../Skeletons/MovieCardSkeleton.tsx';
 
-export const NowPlaying = () => {
+export const TopRatedSection = () => {
   const [visibleCount, setVisibleCount] = useState(MOVIES_TO_SHOW);
   const [page, setPage] = useState(1);
 
-  const { data, isFetching } = useGetNowPlayingMoviesQuery({ page });
+  const { data, isFetching } = useGetTopRatedMoviesQuery({ page });
   const allMovies = data?.results ?? [];
 
   const onClickHandler = () => {
@@ -26,11 +26,11 @@ export const NowPlaying = () => {
 
   return (
     <div>
-      <h2 className={s.sectionTitle}>Now Playing</h2>
+      <h2 className={s.sectionTitle}>Top Rated</h2>
       {!isFetching && allMovies.length === 0 && <EmptyMoviesState />}
       <div className={s.popularMovies}>
         {isFetching && allMovies.length === 0
-          ? Array.from({ length: 6 }).map((_, index) => <MovieCardSkeleton key={`np-skel-${index}`} />)
+          ? Array.from({ length: 6 }).map((_, index) => <MovieCardSkeleton key={`tr-skel-${index}`} />)
           : null}
         {allMovies
           .slice(0, visibleCount)
@@ -54,3 +54,5 @@ export const NowPlaying = () => {
     </div>
   );
 };
+
+export default TopRatedSection;

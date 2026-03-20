@@ -3,6 +3,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link, type To } from 'react-router-dom';
 
 import styles from '../MovieDetailPage.module.css';
+import MovieDetailSkeleton from './MovieDetailSkeleton.tsx';
 
 type MovieDetailStateProps = {
   backTarget: To;
@@ -11,7 +12,7 @@ type MovieDetailStateProps = {
 
 export const MovieDetailState = ({ backTarget, variant }: MovieDetailStateProps) => {
   if (variant === 'loading') {
-    return <div className={styles.loader}>Загрузка фильма...</div>;
+    return <MovieDetailSkeleton />;
   }
 
   const message =

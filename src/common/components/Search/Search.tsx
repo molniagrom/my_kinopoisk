@@ -6,6 +6,7 @@ import s from './Search.module.css';
 import SearchForm from '../SearchForm/SearchForm.tsx';
 import { useFetchSearcheMoviesByTitleQuery } from '@/features/films/moviesApi.ts';
 import Film from '../Film/Film.tsx';
+import MovieCardSkeleton from '../Skeletons/MovieCardSkeleton.tsx';
 
 export const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -82,6 +83,9 @@ export const Search = () => {
       ) : (
         <>
           <div className={s.grid}>
+            {isFetching && results.length === 0
+              ? Array.from({ length: 12 }).map((_, index) => <MovieCardSkeleton key={`search-skel-${index}`} />)
+              : null}
             {results
               .filter((movie) => movie.poster_path !== null)
               .map((movie) => (

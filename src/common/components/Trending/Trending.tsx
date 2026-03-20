@@ -5,13 +5,23 @@ import { FilmSlider } from '../FilmSlider/FilmSlider.tsx';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { Path } from '../../routing/paths.ts';
+import MovieCardSkeleton from '../Skeletons/MovieCardSkeleton.tsx';
 
 export const Trending = () => {
   const { data, isLoading, isError } = useGetPopularMoviesQuery({ region: 'MD', page: 1, language: 'ru-RU' });
   const navigate = useNavigate();
 
   if (isLoading) {
-    return <div className={s.trending}>Загрузка...</div>;
+    return (
+      <div className={s.trending}>
+        <h2 className={s.sectionTitle}>Trending</h2>
+        <FilmSlider>
+          {Array.from({ length: 6 }).map((_, index) => (
+            <MovieCardSkeleton key={`trend-skel-${index}`} />
+          ))}
+        </FilmSlider>
+      </div>
+    );
   }
 
   if (isError || !data) {
