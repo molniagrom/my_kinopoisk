@@ -5,10 +5,11 @@ import styles from './PageNotFound.module.css';
 import { Path } from '../../routing/paths.ts';
 
 export const PageNotFound = () => (
-  <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+  <Container className={styles.page}>
     <h1 className={styles.title}>404</h1>
-    <h2 className={styles.subtitle}>page not found</h2>
-    <Button variant="contained" component={Link} to={Path.Main} sx={{ width: '330px', mt: '20px' }}>
+    <h2 className={styles.subtitle}>Page not found</h2>
+    <p className={styles.description}>Похоже, такой страницы не существует.</p>
+    <Button className={styles.button} variant="contained" component={Link} to={Path.Main}>
       Вернуться на главную
     </Button>
   </Container>

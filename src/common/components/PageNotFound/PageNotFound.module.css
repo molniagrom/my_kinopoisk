@@ -1,6 +1,15 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 60px 16px 80px;
+  min-height: calc(100vh - 120px);
+}
+
 .title {
   text-align: center;
-  font-size: 250px;
+  font-size: clamp(140px, 24vw, 260px);
   margin: 0;
   color: var(--metal-silver-bright);
   text-shadow: 0 0 22px rgba(111, 45, 168, 0.33);
@@ -8,8 +17,20 @@
 
 .subtitle {
   text-align: center;
-  font-size: 50px;
+  font-size: clamp(26px, 5vw, 52px);
   margin: 0;
   text-transform: uppercase;
   color: var(--text-muted);
+}
+
+.description {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.button {
+  margin-top: 16px;
+  width: min(330px, 100%);
 }
