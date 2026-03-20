@@ -1,129 +1,166 @@
 import { useMemo, useRef, useState } from 'react';
+import {
+  useGetPopularMoviesQuery,
+  useGetTvOnTheAirQuery,
+  useGetMovieWatchProvidersQuery,
+  useDiscoverMoviesQuery,
+} from '@/features/films/moviesApi.ts';
+import TrailerCard from './TrailerCard.tsx';
 
 const tabs = ['Popular', 'Streaming', 'On TV', 'For Rent', 'In Theaters'];
 
-type TrailerItem = {
-  id: string;
-  title: string;
-  meta: string;
-  badge?: string;
-  imageUrl: string;
-};
+const formatDate = (value: string) =>
+  new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value));
 
-const trailersByTab: Record<string, TrailerItem[]> = {
-  Popular: [
-    {
-      id: 'popular-1',
-      title: 'Echoes of Tomorrow',
-      meta: 'Official Trailer • 2:12',
-      badge: 'New',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/9n2tJBplPbgR2ca05hS5CKXwP2c.jpg',
-    },
-    {
-      id: 'popular-2',
-      title: 'Orion Drift',
-      meta: 'Teaser • 1:04',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/6MKr3KgOLmzOP6MSuZERO41Lpkt.jpg',
-    },
-    {
-      id: 'popular-3',
-      title: 'Velvet Horizon',
-      meta: 'Official Trailer • 2:28',
-      badge: 'Exclusive',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/7VsJyT4f6bNIW6s0sVQeJ9sK3J0.jpg',
-    },
-  ],
-  Streaming: [
-    {
-      id: 'stream-1',
-      title: 'Signal in the Mist',
-      meta: 'Season 2 Episode Trailer • 2:14',
-      badge: 'Streaming',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/4HodYYKEIsGOdinkGi2Ucz6X9i0.jpg',
-    },
-    {
-      id: 'stream-2',
-      title: 'Neon Fragments',
-      meta: 'First Look • 1:36',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/8uO0gUM8aNqYLs1OsTBQiXu0fEv.jpg',
-    },
-    {
-      id: 'stream-3',
-      title: 'Dustline',
-      meta: 'Official Trailer • 2:03',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/2u7zbn8EudG6kLlBzUYqP8RyFU4.jpg',
-    },
-  ],
-  'On TV': [
-    {
-      id: 'tv-1',
-      title: 'Black Harbor',
-      meta: 'Season Finale • 1:48',
-      badge: 'On TV',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/1e1t6E6D9kJ4V0B2pJmohzF4VYH.jpg',
-    },
-    {
-      id: 'tv-2',
-      title: 'Crossfade',
-      meta: 'Episode Trailer • 2:05',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/6cZbexuXUZJ6yZ7F9QDDpR4wV0G.jpg',
-    },
-    {
-      id: 'tv-3',
-      title: 'Winterline',
-      meta: 'Sneak Peek • 1:27',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/5IGQG8Pah7qgqjJ5pB2kH4a8ZB1.jpg',
-    },
-  ],
-  'For Rent': [
-    {
-      id: 'rent-1',
-      title: 'Orbitfall',
-      meta: 'In Theaters March 2026',
-      badge: 'For Rent',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/2a7p5XQW2PZQm3B3s9pWJ8d1CF8.jpg',
-    },
-    {
-      id: 'rent-2',
-      title: 'Night Circuit',
-      meta: 'Official Trailer • 2:22',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/9SSEUrSqhljBMzRe4aBTh17rUaC.jpg',
-    },
-    {
-      id: 'rent-3',
-      title: 'Violet Run',
-      meta: 'Teaser • 1:11',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/6iw6MifT2MUM9JZg2w7V7XJAzX5.jpg',
-    },
-  ],
-  'In Theaters': [
-    {
-      id: 'theaters-1',
-      title: 'Nova Strike',
-      meta: 'In Theaters April 2026',
-      badge: 'In Theaters',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/8Gxv8gSFCU0XGDykEG4WbS2F6yG.jpg',
-    },
-    {
-      id: 'theaters-2',
-      title: 'Glass City',
-      meta: 'Official Trailer • 2:19',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/4o5Y4vVdK3J4kG3q5S8M7pYTBv5.jpg',
-    },
-    {
-      id: 'theaters-3',
-      title: 'Pulse Divide',
-      meta: 'Teaser • 0:58',
-      imageUrl: 'https://image.tmdb.org/t/p/w780/7Yuf6kQ8cb5qgD7HkqQnJ8k3tW7.jpg',
-    },
-  ],
+const buildMeta = (publishedAt?: string) => {
+  if (!publishedAt) return 'Official Trailer';
+  return `Official Trailer • ${formatDate(publishedAt)}`;
 };
 
 export const LatestTrailers = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const listRef = useRef<HTMLDivElement | null>(null);
 
-  const trailers = useMemo(() => trailersByTab[activeTab] ?? [], [activeTab]);
+  const { data: popularMovies, isFetching: isPopularFetching } = useGetPopularMoviesQuery({
+    page: 1,
+    language: 'en-US',
+    region: 'US',
+  });
+  const { data: tvOnTheAir, isFetching: isTvFetching } = useGetTvOnTheAirQuery({ page: 1, language: 'en-US' });
+  const { data: watchProviders, isFetching: isProvidersFetching } = useGetMovieWatchProvidersQuery({
+    watch_region: 'US',
+    language: 'en-US',
+  });
+
+  const providerMap = useMemo(() => {
+    const map = new Map<string, number>();
+    watchProviders?.results?.forEach((provider) => {
+      map.set(provider.provider_name, provider.provider_id);
+    });
+    return map;
+  }, [watchProviders]);
+
+  const streamingProviderNames = [
+    'Netflix',
+    'Amazon Prime Video',
+    'Disney Plus',
+    'Hulu',
+    'Max',
+    'Paramount Plus',
+  ];
+  const rentProviderNames = ['Apple TV', 'Amazon Video', 'Google Play Movies', 'Vudu', 'Microsoft Store', 'YouTube'];
+
+  const streamingProviderIds = useMemo(
+    () =>
+      streamingProviderNames
+        .map((name) => providerMap.get(name))
+        .filter((id): id is number => Boolean(id))
+        .join('|'),
+    [providerMap]
+  );
+  const rentProviderIds = useMemo(
+    () =>
+      rentProviderNames
+        .map((name) => providerMap.get(name))
+        .filter((id): id is number => Boolean(id))
+        .join('|'),
+    [providerMap]
+  );
+
+  const today = useMemo(() => new Date(), []);
+  const releaseEnd = useMemo(() => today.toISOString().slice(0, 10), [today]);
+  const releaseStart = useMemo(() => {
+    const date = new Date(today);
+    date.setDate(date.getDate() - 60);
+    return date.toISOString().slice(0, 10);
+  }, [today]);
+
+  const { data: streamingMovies, isFetching: isStreamingFetching } = useDiscoverMoviesQuery(
+    {
+      language: 'en-US',
+      region: 'US',
+      watch_region: 'US',
+      with_watch_providers: streamingProviderIds || undefined,
+      with_watch_monetization_types: 'flatrate|free|ads',
+      sort_by: 'popularity.desc',
+      include_video: true,
+      page: 1,
+    },
+    { skip: false }
+  );
+  const { data: rentMovies, isFetching: isRentFetching } = useDiscoverMoviesQuery(
+    {
+      language: 'en-US',
+      region: 'US',
+      watch_region: 'US',
+      with_watch_providers: rentProviderIds || undefined,
+      with_watch_monetization_types: 'rent',
+      sort_by: 'popularity.desc',
+      include_video: true,
+      page: 1,
+    },
+    { skip: false }
+  );
+  const { data: inTheatersMovies, isFetching: isInTheatersFetching } = useDiscoverMoviesQuery({
+    language: 'en-US',
+    region: 'US',
+    sort_by: 'release_date.desc',
+    with_release_type: '2',
+    'primary_release_date.gte': releaseStart,
+    'primary_release_date.lte': releaseEnd,
+    include_video: true,
+    page: 1,
+  });
+
+  const items = useMemo(() => {
+    if (activeTab === 'Popular') {
+      return (popularMovies?.results ?? []).map((movie) => ({
+        id: movie.id,
+        title: movie.title,
+        backdrop_path: movie.backdrop_path,
+        mediaType: 'movie' as const,
+      }));
+    }
+    if (activeTab === 'Streaming') {
+      return (streamingMovies?.results ?? []).map((movie) => ({
+        id: movie.id,
+        title: movie.title,
+        backdrop_path: movie.backdrop_path,
+        mediaType: 'movie' as const,
+      }));
+    }
+    if (activeTab === 'On TV') {
+      return (tvOnTheAir?.results ?? []).map((show) => ({
+        id: show.id,
+        title: show.name,
+        backdrop_path: show.backdrop_path,
+        mediaType: 'tv' as const,
+      }));
+    }
+    if (activeTab === 'For Rent') {
+      return (rentMovies?.results ?? []).map((movie) => ({
+        id: movie.id,
+        title: movie.title,
+        backdrop_path: movie.backdrop_path,
+        mediaType: 'movie' as const,
+      }));
+    }
+    return (inTheatersMovies?.results ?? []).map((movie) => ({
+      id: movie.id,
+      title: movie.title,
+      backdrop_path: movie.backdrop_path,
+      mediaType: 'movie' as const,
+    }));
+  }, [activeTab, popularMovies, streamingMovies, tvOnTheAir, rentMovies, inTheatersMovies]);
+
+  const isLoading =
+    isPopularFetching ||
+    isTvFetching ||
+    isProvidersFetching ||
+    isStreamingFetching ||
+    isRentFetching ||
+    isInTheatersFetching;
+  const badgeLabel = activeTab === 'Popular' ? undefined : activeTab;
 
   const handleScroll = (direction: 'left' | 'right') => {
     if (!listRef.current) return;
@@ -184,41 +221,18 @@ export const LatestTrailers = () => {
             ref={listRef}
             className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-6 scrollbar-thin md:gap-6"
           >
-            {trailers.map((item) => (
-              <article
-                key={item.id}
-                className="min-w-[85vw] flex-shrink-0 snap-start overflow-hidden rounded-[var(--radius-2xl)] border border-[var(--surface-border)] bg-[var(--surface-1)] shadow-[var(--surface-shadow-soft)] transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[var(--surface-shadow)] sm:min-w-[480px] md:min-w-[520px]"
-              >
-                <div className="relative h-[200px] bg-[var(--metal-black)] sm:h-[220px] md:h-[240px]">
-                  <img src={item.imageUrl} alt={item.title} className="h-full w-full object-cover" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex h-[80px] w-[80px] items-center justify-center rounded-full border-[3px] border-white/30 bg-gradient-to-br from-[var(--decepticon-purple)] to-[var(--decepticon-purple-bright)] shadow-[var(--cta-shadow)] backdrop-blur-sm transition-transform duration-300 group-hover:scale-110 md:h-[96px] md:w-[96px]">
-                      <svg
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                        className="h-10 w-10 text-white md:h-12 md:w-12"
-                        fill="currentColor"
-                      >
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2 px-6 py-5">
-                  {item.badge ? (
-                    <span className="w-fit rounded-full bg-[var(--chip-bg)] px-3 py-1 text-xs uppercase text-[var(--decepticon-purple-bright)]">
-                      {item.badge}
-                    </span>
-                  ) : null}
-                  <h3
-                    className="text-[1.15rem] font-bold text-[var(--text-main)] md:text-[1.3rem]"
-                    style={{ fontFamily: "Geist Variable, 'Segoe UI', Tahoma, Verdana, sans-serif" }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-[var(--text-muted)] md:text-base">{item.meta}</p>
-                </div>
-              </article>
+            {isLoading ? (
+              <div className="min-w-[85vw] flex-shrink-0 rounded-[var(--radius-2xl)] border border-[var(--surface-border)] bg-[var(--surface-1)] p-6 text-[var(--text-muted)] sm:min-w-[480px] md:min-w-[520px]">
+                Загрузка трейлеров...
+              </div>
+            ) : null}
+            {!isLoading && items.length === 0 ? (
+              <div className="min-w-[85vw] flex-shrink-0 rounded-[var(--radius-2xl)] border border-[var(--surface-border)] bg-[var(--surface-1)] p-6 text-[var(--text-muted)] sm:min-w-[480px] md:min-w-[520px]">
+                Трейлеры не найдены.
+              </div>
+            ) : null}
+            {items.slice(0, 12).map((item) => (
+              <TrailerCard key={`${item.mediaType}-${item.id}`} item={item} badgeLabel={badgeLabel} formatMeta={buildMeta} />
             ))}
           </div>
         </div>
