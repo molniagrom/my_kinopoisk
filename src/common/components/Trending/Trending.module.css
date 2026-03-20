@@ -39,3 +39,27 @@
   max-width: 100vw;
   overflow-x: hidden;
 }
+
+@media (max-width: 900px) {
+  .sectionTitle {
+    font-size: 28px;
+  }
+
+  .trending :global(.slider-card) {
+    width: 200px;
+  }
+}
+
+@media (max-width: 600px) {
+  .trending {
+    padding: 16px;
+  }
+
+  .sectionTitle {
+    font-size: 24px;
+  }
+
+  .trending :global(.slider-card) {
+    width: 170px;
+  }
+}

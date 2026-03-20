@@ -63,3 +63,38 @@
 .btnNext {
   right: -10px;
 }
+
+@media (max-width: 900px) {
+  .items > * {
+    width: 200px;
+  }
+
+  .navButton {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .items {
+    gap: 14px;
+  }
+
+  .items > * {
+    width: 170px;
+  }
+
+  .navButton {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+
+  .btnPrev {
+    left: -6px;
+  }
+
+  .btnNext {
+    right: -6px;
+  }
+}

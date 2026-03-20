@@ -159,3 +159,18 @@
     align-items: flex-start;
   }
 }
+
+@media (max-width: 600px) {
+  .page {
+    margin: 16px;
+    padding: 20px;
+  }
+
+  .backdrop {
+    min-height: 220px;
+  }
+
+  .sectionTitle {
+    font-size: 1.2rem;
+  }
+}
