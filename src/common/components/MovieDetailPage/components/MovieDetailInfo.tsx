@@ -18,7 +18,7 @@ export const MovieDetailInfo = ({ movie, posterUrl, releaseYear, runtime, backTa
         <img src={posterUrl} alt={movie.title} className={styles.poster} />
       </div>
       <div className={styles.details}>
-        <MovieDetailHeader title={movie.title} backTarget={backTarget} tagline={movie.tagline} />
+        <MovieDetailHeader title={movie.title} backTarget={backTarget} movieId={movie.id} tagline={movie.tagline} />
         <div className={styles.metaRow}>
           <span>Год: {releaseYear}</span>
           <span>Длительность: {runtime}</span>
