@@ -10,7 +10,7 @@ export const useHeaderSearch = () => {
 
   const { data: suggestionsData } = useFetchSearcheMoviesByTitleQuery(
     { query: searchValue },
-    { skip: !isSearchOpen || searchValue.trim() === '' }
+    { skip: isSearchOpen || searchValue.trim() === '' }
   );
 
   const suggestions = suggestionsData?.results.map((movie) => movie.original_title) ?? [];
@@ -21,14 +21,19 @@ export const useHeaderSearch = () => {
   const handleSearchSubmit = () => {
     const trimmed = searchValue.trim();
     if (!trimmed) {
+      setSearchValue('');
+      setIsSearchOpen(true);
       navigate(Path.Search);
       return;
     }
+    setSearchValue('');
+    setIsSearchOpen(true);
     navigate(`${Path.Search}?query=${encodeURIComponent(trimmed)}`);
   };
 
   const handleSearchClear = () => {
     setSearchValue('');
+    setIsSearchOpen(true);
     navigate(Path.Search);
   };
 
