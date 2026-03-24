@@ -40,7 +40,7 @@
   transition: all 0.25s ease !important;
   align-self: center;
   min-height: auto !important;
-  font-size: clamp(0.8rem, 0.72rem + 0.25vw, 0.95rem) !important;
+  font-size: clamp(0.84rem, 0.76rem + 0.22vw, 0.95rem) !important;
   padding: clamp(4px, 0.25rem + 0.25vw, 8px) clamp(8px, 0.5rem + 0.45vw, 14px) !important;
   line-height: 1.1;
 }
@@ -53,7 +53,7 @@
 
 .logoutButton {
   background: var(--cta-bg) !important;
-  font-size: clamp(0.78rem, 0.72rem + 0.2vw, 0.92rem) !important;
+  font-size: clamp(0.82rem, 0.75rem + 0.18vw, 0.92rem) !important;
   padding: clamp(5px, 0.3rem + 0.2vw, 9px) clamp(10px, 0.65rem + 0.35vw, 16px) !important;
 }
 
@@ -114,14 +114,14 @@
 
 .menuItemText {
   margin-left: clamp(4px, 0.2rem + 0.35vw, 8px);
-  font-size: clamp(0.82rem, 0.76rem + 0.18vw, 0.95rem);
+  font-size: clamp(0.84rem, 0.78rem + 0.16vw, 0.95rem);
 }
 
 .searchDebugLabel {
   color: red;
   font-weight: 700;
   margin-right: clamp(8px, 0.4rem + 0.8vw, 16px);
-  font-size: clamp(0.78rem, 0.72rem + 0.2vw, 0.95rem);
+  font-size: clamp(0.82rem, 0.75rem + 0.18vw, 0.95rem);
 }
 
 .searchRowOpen {
@@ -173,7 +173,32 @@
 
 @media (max-width: 600px) {
   .toolbar {
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .logoutButton {
+    font-size: 0.95rem !important;
+    padding: 8px 14px !important;
+  }
+
+  .menuItemText {
+    font-size: 0.98rem;
+    margin-left: 8px;
+  }
+
+  .searchDebugLabel {
+    font-size: 0.92rem;
+  }
+
+  .menuIcon {
+    font-size: 32px !important;
+  }
+
+  .searchRowOpen {
+    gap: 10px;
+    padding: 10px 12px 12px;
   }
 }
