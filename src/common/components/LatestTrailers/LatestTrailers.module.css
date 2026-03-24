@@ -58,6 +58,8 @@
 .sliderWrap {
   position: relative;
   margin-top: 2rem;
+  margin-right: calc(50% - 50vw);
+  padding-right: 0;
 }
 
 .scrollButton {
