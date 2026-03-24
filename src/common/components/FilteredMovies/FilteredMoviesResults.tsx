@@ -2,10 +2,10 @@ import type { RefObject } from 'react';
 import { CircularProgress } from '@mui/material';
 
 import s from './filteredMovies.module.css';
-import MovieCard from '../MovieCard.tsx';
 import { EmptyMoviesState } from '../CategoryMovies/EmptyMoviesState/EmptyMoviesState.tsx';
 import type { Movie } from '@/features/films/filmsApi.types.ts';
 import MovieCardSkeleton from '../Skeletons/MovieCardSkeleton.tsx';
+import MovieCard from "@/common/components/Film/MovieCard.tsx";
 
 type FilteredMoviesResultsProps = {
   movies: Movie[];

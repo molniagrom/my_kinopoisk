@@ -1,5 +1,4 @@
 import s from '../categoryMovies.module.css';
-import MovieCard from '../MovieCard.tsx';
 import { useState } from 'react';
 
 import Button from '@mui/material/Button';
@@ -7,6 +6,7 @@ import { MOVIES_TO_SHOW } from '../../../constants';
 import { useGetPopularMoviesQuery } from '@/features/films/moviesApi.ts';
 import { EmptyMoviesState } from '../EmptyMoviesState/EmptyMoviesState.tsx';
 import MovieCardSkeleton from '../../Skeletons/MovieCardSkeleton.tsx';
+import MovieCard from "@/common/components/Film/MovieCard.tsx";
 
 export const PopularMovies = () => {
   const [visibleCount, setVisibleCount] = useState(MOVIES_TO_SHOW);

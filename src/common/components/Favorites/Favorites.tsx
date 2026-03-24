@@ -1,9 +1,9 @@
 
 import s from './Favorites.module.css';
-import MovieCard from '../MovieCard.tsx';
 import { useAppSelector } from '@/common/hooks/useAppHooks.ts';
 import { selectAuthAccountId, selectAuthSessionId, selectIsAuthorized } from '@/features/selectors.ts';
 import { useGetAccountFavoritesQuery } from '@/features/api/authApi.ts';
+import MovieCard from "@/common/components/Film/MovieCard.tsx";
 
 export const Favorites = () => {
   const isAuthorized = useAppSelector(selectIsAuthorized);

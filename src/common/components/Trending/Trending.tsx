@@ -1,11 +1,11 @@
 import { useGetPopularMoviesQuery } from '@/features/films/moviesApi.ts';
-import MovieCard from '../MovieCard.tsx';
 import s from './Trending.module.css';
 import { FilmSlider } from '../FilmSlider/FilmSlider.tsx';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { Path } from '../../routing/paths.ts';
 import MovieCardSkeleton from '../Skeletons/MovieCardSkeleton.tsx';
+import MovieCard from "@/common/components/Film/MovieCard.tsx";
 
 export const Trending = () => {
   const { data, isLoading, isError } = useGetPopularMoviesQuery({ region: 'MD', page: 1, language: 'ru-RU' });

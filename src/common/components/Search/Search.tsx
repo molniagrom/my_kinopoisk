@@ -5,8 +5,8 @@ import { useSearchParams } from 'react-router-dom';
 import s from './Search.module.css';
 import SearchForm from '../SearchForm/SearchForm.tsx';
 import { useFetchSearcheMoviesByTitleQuery } from '@/features/films/moviesApi.ts';
-import MovieCard from '../MovieCard.tsx';
 import MovieCardSkeleton from '../Skeletons/MovieCardSkeleton.tsx';
+import MovieCard from "@/common/components/Film/MovieCard.tsx";
 
 export const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();

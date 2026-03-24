@@ -1,6 +1,6 @@
 import styles from '../MovieDetailPage.module.css';
-import MovieCard from '../MovieCard.tsx';
 import type { Movie } from '@/features/films/filmsApi.types.ts';
+import MovieCard from "@/common/components/Film/MovieCard.tsx";
 
 type SimilarMoviesSectionProps = {
   movies: Movie[];
