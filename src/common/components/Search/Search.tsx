@@ -105,7 +105,7 @@ export const Search = () => {
                 count={totalPages}
                 page={page}
                 onChange={(_event, value) => setPage(value)}
-                color="primary"
+                color="secondary"
               />
             </div>
           )}
