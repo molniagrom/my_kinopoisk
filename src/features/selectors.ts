@@ -5,6 +5,7 @@ export const selectFilteredMovies = (state: RootState) => state.filteredMovies;
 export const selectThemeMode = (state: RootState) => state.theme.mode;
 export const selectAuthSessionId = (state: RootState) => state.auth.sessionId;
 export const selectAuthAccountId = (state: RootState) => state.auth.accountId;
+export const selectFavoriteIds = (state: RootState) => state.auth.favoriteIds;
 export const selectIsAuthorized = (state: RootState) => Boolean(state.auth.sessionId && state.auth.accountId);
 export const selectAppError = (state: RootState) => state.app.error;
 export const selectIsRequesting = (state: RootState) => {

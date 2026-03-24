@@ -8,9 +8,9 @@ import Button from '@mui/material/Button';
 import styles from './film.module.css';
 import { moviePagePath } from '../../routing/paths.ts';
 import { useAppSelector } from '@/common/hooks/useAppHooks.ts';
-import { selectAuthAccountId, selectAuthSessionId, selectIsAuthorized } from '@/features/selectors.ts';
-import { authApi, useMarkFavoriteMutation } from '@/features/api/authApi.ts';
-import React, { useEffect, useState } from 'react';
+import { selectAuthAccountId, selectAuthSessionId, selectFavoriteIds, selectIsAuthorized } from '@/features/selectors.ts';
+import { useMarkFavoriteMutation } from '@/features/api/authApi.ts';
+import React, { useState } from 'react';
 
 interface MovieCardProps {
   movieId: number;
@@ -25,18 +25,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ movieId, title, releaseDate, vote
   const isAuthorized = useAppSelector(selectIsAuthorized);
   const sessionId = useAppSelector(selectAuthSessionId);
   const accountId = useAppSelector(selectAuthAccountId);
+  const favoriteIds = useAppSelector(selectFavoriteIds);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const favoritesCache = useAppSelector((state) =>
-    accountId && sessionId
-      ? authApi.endpoints.getAccountFavorites.select({ accountId, sessionId, page: 1 })(state).data?.results
-      : undefined
-  );
-  const cachedFavorite = Boolean(favoritesCache?.some((movie) => movie.id === movieId));
-  const [isFavoriteLocal, setIsFavoriteLocal] = useState(cachedFavorite);
-
-  useEffect(() => {
-    setIsFavoriteLocal(cachedFavorite);
-  }, [cachedFavorite]);
 
   const [markFavorite] = useMarkFavoriteMutation();
   const formattedDate = releaseDate
@@ -48,7 +38,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movieId, title, releaseDate, vote
     : '';
 
   const percentage = Math.round(voteAverage * 10);
-  const isFavorite = isAuthorized && isFavoriteLocal;
+  const isFavorite = isAuthorized && favoriteIds.includes(movieId);
 
   const onFavoriteClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -59,12 +49,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movieId, title, releaseDate, vote
     }
 
     if (sessionId && accountId) {
-      const nextFavorite = !isFavorite;
-      setIsFavoriteLocal(nextFavorite);
       try {
-        await markFavorite({ accountId, sessionId, mediaId: movieId, favorite: nextFavorite }).unwrap();
+        await markFavorite({ accountId, sessionId, mediaId: movieId, favorite: !isFavorite }).unwrap();
       } catch {
-        setIsFavoriteLocal(!nextFavorite);
+        // optimistic update rollback happens in authApi.onQueryStarted
       }
     }
   };

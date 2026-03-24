@@ -9,10 +9,11 @@ import {
   selectAppError,
   selectAuthAccountId,
   selectAuthSessionId,
+  selectIsAuthorized,
   selectIsRequesting,
   selectThemeMode,
 } from './features/selectors.ts';
-import { useGetAccountQuery } from './features/api/authApi.ts';
+import { useGetAccountFavoritesQuery, useGetAccountQuery } from './features/api/authApi.ts';
 import { setAccountId } from './features/auth/authSlice.ts';
 import { THEME_STORAGE_KEY } from './common/constants';
 import Snackbar from '@mui/material/Snackbar';
@@ -25,6 +26,7 @@ function App() {
   const dispatch = useAppDispatch();
   const sessionId = useAppSelector(selectAuthSessionId);
   const accountId = useAppSelector(selectAuthAccountId);
+  const isAuthorized = useAppSelector(selectIsAuthorized);
   const appError = useAppSelector(selectAppError);
   const isRequesting = useAppSelector(selectIsRequesting);
   const { data: accountData } = useGetAccountQuery(
@@ -56,6 +58,17 @@ function App() {
       dispatch(setAccountId(accountData.id));
     }
   }, [accountData, accountId, dispatch]);
+
+  useGetAccountFavoritesQuery(
+    {
+      accountId: accountId ?? 0,
+      sessionId: sessionId ?? '',
+      page: 1,
+    },
+    {
+      skip: !isAuthorized,
+    }
+  );
 
   return (
     <div className="app">

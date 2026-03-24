@@ -9,6 +9,7 @@ import {
 } from '../auth/authApi.schemas.ts';
 import { moviesResponseSchema } from '../films/filmsApi.schemas.ts';
 import { parseWithSchema } from '@/common/utils';
+import { setFavoriteIds, setFavoriteStatus } from '../auth/authSlice.ts';
 
 type RequestTokenResponse = {
   success: boolean;
@@ -89,6 +90,14 @@ export const authApi = baseApi.injectEndpoints({
         },
       }),
       providesTags: ['Favorites'],
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setFavoriteIds(data.results.map((movie) => movie.id)));
+        } catch {
+          // ignore sync errors here, global error handling is already in baseApi
+        }
+      },
       transformResponse: (response: unknown) => parseWithSchema(moviesResponseSchema, response),
     }),
     getMovieAccountStates: build.query<MovieAccountStatesResponse, { movieId: number; sessionId: string }>({
@@ -119,6 +128,14 @@ export const authApi = baseApi.injectEndpoints({
           favorite,
         },
       }),
+      async onQueryStarted({ mediaId, favorite }, { dispatch, queryFulfilled }) {
+        dispatch(setFavoriteStatus({ movieId: mediaId, favorite }));
+        try {
+          await queryFulfilled;
+        } catch {
+          dispatch(setFavoriteStatus({ movieId: mediaId, favorite: !favorite }));
+        }
+      },
       invalidatesTags: (_result, _error, arg) => [
         'Favorites',
         { type: 'AccountStates', id: arg.mediaId },
