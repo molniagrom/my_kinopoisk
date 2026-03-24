@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { latestTrailersTabs } from './constants.ts';
 import { buildTrailerMeta } from './utils.ts';
 import { useLatestTrailersData } from './hooks/useLatestTrailersData.ts';
@@ -8,16 +8,9 @@ import LatestTrailersTabs from './LatestTrailersTabs.tsx';
 
 export const LatestTrailers = () => {
   const [activeTab, setActiveTab] = useState(latestTrailersTabs[0]);
-  const listRef = useRef<HTMLDivElement | null>(null);
 
   const { items, isLoading } = useLatestTrailersData(activeTab);
   const badgeLabel = activeTab === 'Popular' ? undefined : activeTab;
-
-  const handleScroll = (direction: 'left' | 'right') => {
-    if (!listRef.current) return;
-    const offset = direction === 'left' ? -520 : 520;
-    listRef.current.scrollBy({ left: offset, behavior: 'smooth' });
-  };
 
   return (
     <section className={styles.section}>
@@ -31,15 +24,7 @@ export const LatestTrailers = () => {
 
         <LatestTrailersTabs tabs={latestTrailersTabs} activeTab={activeTab} onSelect={setActiveTab} />
 
-        <LatestTrailersSlider
-          items={items}
-          isLoading={isLoading}
-          badgeLabel={badgeLabel}
-          onScroll={handleScroll}
-          listRef={listRef}
-          formatMeta={buildTrailerMeta}
-        />
-
+        <LatestTrailersSlider items={items} isLoading={isLoading} badgeLabel={badgeLabel} formatMeta={buildTrailerMeta} />
       </div>
     </section>
   );
