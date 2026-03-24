@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 
-import styles from './film.module.css';
+import styles from './MovieCard.module.css';
 import { moviePagePath } from '../../routing/paths.ts';
 import { useAppSelector } from '@/common/hooks/useAppHooks.ts';
 import { selectAuthAccountId, selectAuthSessionId, selectFavoriteIds, selectIsAuthorized } from '@/features/selectors.ts';

@@ -1,5 +1,5 @@
 import s from '../categoryMovies.module.css';
-import Film from '../../Film/Film.tsx';
+import MovieCard from '../MovieCard.tsx';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import { MOVIES_TO_SHOW } from '../../../constants';
@@ -36,7 +36,7 @@ export const NowPlaying = () => {
           .slice(0, visibleCount)
           .filter((movie) => movie.poster_path !== null)
           .map((movie) => (
-            <Film
+            <MovieCard
               key={movie.id}
               movieId={movie.id}
               title={movie.original_title}
@@ -54,3 +54,4 @@ export const NowPlaying = () => {
     </div>
   );
 };
+

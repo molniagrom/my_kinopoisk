@@ -1,5 +1,5 @@
 import { useGetPopularMoviesQuery } from '@/features/films/moviesApi.ts';
-import Film from '../Film/Film.tsx';
+import MovieCard from '../MovieCard.tsx';
 import s from './Trending.module.css';
 import { FilmSlider } from '../FilmSlider/FilmSlider.tsx';
 import Button from '@mui/material/Button';
@@ -39,7 +39,7 @@ export const Trending = () => {
         {data.results
           .filter((movie) => movie.poster_path !== null)
           .map((movie) => (
-            <Film
+            <MovieCard
               key={movie.id}
               movieId={movie.id}
               title={movie.original_title}
@@ -53,3 +53,4 @@ export const Trending = () => {
     </div>
   );
 };
+

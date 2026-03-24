@@ -1,5 +1,5 @@
 import styles from '../MovieDetailPage.module.css';
-import Film from '../../Film/Film.tsx';
+import MovieCard from '../MovieCard.tsx';
 import type { Movie } from '@/features/films/filmsApi.types.ts';
 
 type SimilarMoviesSectionProps = {
@@ -12,7 +12,7 @@ export const SimilarMoviesSection = ({ movies }: SimilarMoviesSectionProps) => {
       <h2 className={styles.sectionTitle}>Похожие фильмы</h2>
       <div className={styles.similarGrid}>
         {movies.map((item) => (
-          <Film
+          <MovieCard
             key={item.id}
             movieId={item.id}
             title={item.original_title}
@@ -27,3 +27,4 @@ export const SimilarMoviesSection = ({ movies }: SimilarMoviesSectionProps) => {
 };
 
 export default SimilarMoviesSection;
+

@@ -1,6 +1,6 @@
 
 import s from './Favorites.module.css';
-import Film from '../Film/Film.tsx';
+import MovieCard from '../MovieCard.tsx';
 import { useAppSelector } from '@/common/hooks/useAppHooks.ts';
 import { selectAuthAccountId, selectAuthSessionId, selectIsAuthorized } from '@/features/selectors.ts';
 import { useGetAccountFavoritesQuery } from '@/features/api/authApi.ts';
@@ -37,7 +37,7 @@ export const Favorites = () => {
           {favoritesToRender
             .filter((movie) => movie.poster_path !== null)
             .map((movie) => (
-              <Film
+              <MovieCard
                 key={movie.id}
                 movieId={movie.id}
                 title={movie.original_title}
@@ -53,3 +53,4 @@ export const Favorites = () => {
 };
 
 export default Favorites;
+

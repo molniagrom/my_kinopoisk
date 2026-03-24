@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import s from './Search.module.css';
 import SearchForm from '../SearchForm/SearchForm.tsx';
 import { useFetchSearcheMoviesByTitleQuery } from '@/features/films/moviesApi.ts';
-import Film from '../Film/Film.tsx';
+import MovieCard from '../MovieCard.tsx';
 import MovieCardSkeleton from '../Skeletons/MovieCardSkeleton.tsx';
 
 export const Search = () => {
@@ -89,7 +89,7 @@ export const Search = () => {
             {results
               .filter((movie) => movie.poster_path !== null)
               .map((movie) => (
-                <Film
+                <MovieCard
                   key={movie.id}
                   movieId={movie.id}
                   title={movie.original_title}
@@ -116,3 +116,4 @@ export const Search = () => {
 };
 
 export default Search;
+

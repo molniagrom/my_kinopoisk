@@ -2,7 +2,7 @@ import type { RefObject } from 'react';
 import { CircularProgress } from '@mui/material';
 
 import s from './filteredMovies.module.css';
-import Film from '../Film/Film.tsx';
+import MovieCard from '../MovieCard.tsx';
 import { EmptyMoviesState } from '../CategoryMovies/EmptyMoviesState/EmptyMoviesState.tsx';
 import type { Movie } from '@/features/films/filmsApi.types.ts';
 import MovieCardSkeleton from '../Skeletons/MovieCardSkeleton.tsx';
@@ -27,7 +27,7 @@ const FilteredMoviesResults = (
       {movies
         .filter((movie) => movie.poster_path !== null)
         .map((movie) => (
-          <Film
+          <MovieCard
             key={movie.id}
             movieId={movie.id}
             title={movie.original_title}
@@ -50,3 +50,4 @@ const FilteredMoviesResults = (
 );
 
 export default FilteredMoviesResults;
+
