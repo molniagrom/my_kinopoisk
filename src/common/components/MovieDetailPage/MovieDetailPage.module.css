@@ -26,6 +26,7 @@
 
 .posterWrapper {
   width: 100%;
+  display: block;
 }
 
 .poster {
@@ -172,6 +173,68 @@
   }
 }
 
+@media (min-width: 601px) and (max-width: 900px) {
+  .page {
+    margin: 24px;
+    padding: 24px;
+  }
+
+  .backdrop {
+    min-height: 280px;
+  }
+
+  .content {
+    margin-top: 24px;
+  }
+
+  .posterWrapper {
+    display: none;
+  }
+
+  .details {
+    gap: 20px;
+    padding: 24px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(10, 12, 15, 0.12), rgba(10, 12, 15, 0.04));
+    border: 1px solid var(--surface-border);
+    box-shadow: var(--surface-shadow-soft);
+  }
+
+  .headerRow h1 {
+    font-size: 2rem;
+  }
+
+  .headerActions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .metaRow,
+  .statsRow {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 20px;
+  }
+
+  .metaRow span,
+  .statsRow div {
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--surface-border);
+  }
+
+  .overview {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .chipRow {
+    gap: 10px;
+  }
+}
+
 @media (max-width: 600px) {
   .page {
     margin: 16px;
@@ -179,10 +242,40 @@
   }
 
   .backdrop {
-    min-height: 220px;
+    display: none;
+  }
+
+  .content {
+    margin-top: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .posterWrapper {
+    display: block;
   }
 
   .sectionTitle {
     font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 408px) {
+  .castCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .castPhoto {
+    width: 72px;
+    min-width: 72px;
+    height: 108px;
+  }
+
+  .castInfo {
+    flex: 1;
+    justify-content: center;
   }
 }

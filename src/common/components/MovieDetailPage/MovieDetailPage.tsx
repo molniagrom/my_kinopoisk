@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useLocation, useParams, type Location } from 'react-router-dom';
 
 import { Path } from '../../routing/paths.ts';
@@ -14,6 +15,10 @@ export const MovieDetailPage = () => {
   const backTarget = (location.state as { from?: Location } | null)?.from ?? Path.Main;
   const { skip, isFetching, movie, posterUrl, backdropUrl, releaseYear, runtime, cast, similar, actorPlaceholder } =
     useMovieDetailData(movieId);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [movieId]);
 
   if (skip) {
     return <MovieDetailState backTarget={backTarget} variant="invalid" />;
