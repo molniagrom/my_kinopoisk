@@ -1,10 +1,10 @@
 import s from '../categoryMovies.module.css';
-import MovieCard from '../MovieCard.tsx';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import { MOVIES_TO_SHOW } from '../../../constants';
 import { useGetTopRatedMoviesQuery } from '@/features/films/moviesApi.ts';
 import { EmptyMoviesState } from '../EmptyMoviesState/EmptyMoviesState.tsx';
+import MovieCard from "@/common/components/Film/MovieCard.tsx";
 
 export const TopRated = () => {
   const [visibleCount, setVisibleCount] = useState(MOVIES_TO_SHOW);
