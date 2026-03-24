@@ -28,8 +28,8 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const navLinks = [
   { label: 'Main', path: Path.Main },
-  { label: 'Category Movies', path: Path.CategoryMovies },
-  { label: 'Filtered Movies', path: Path.FilteredMovies },
+  { label: 'Category', path: Path.CategoryMovies },
+  { label: 'Filtered', path: Path.FilteredMovies },
   { label: 'Search', path: Path.Search },
   { label: 'Favorites', path: Path.Favorites },
 ];
@@ -110,9 +110,9 @@ export const Header = () => {
     <AppBar className={s.header} position="static">
       {isSearchOpen ? (
         <Toolbar className={s.toolbar}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box className={s.leftArea}>
             <Box component="img" src={tmdbLogo} alt="TMDB Logo" className={s.logo} />
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+            <Box className={s.desktopNav}>
               {navLinks.map((link) => (
                 <Button key={link.path} color="inherit" className={s.navButton} component={Link} to={link.path}>
                   {link.label}
@@ -120,14 +120,14 @@ export const Header = () => {
               ))}
             </Box>
           </Box>
-          <Box className={s.rightArea} sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
+          <Box className={s.rightArea}>
             <Box className={s.actions}>
               <MyAvatar src={avatarSrc} alt="User Avatar" size={40} />
               <Button className={s.logoutButton} variant="contained" onClick={handleAuthClick}>
                 {isAuthorized ? 'log out' : 'log in'}
               </Button>
-              <SearchIcon sx={{ fontSize: 30, cursor: 'pointer' }} onClick={() => setIsSearchOpen(false)} />
-              <NotificationsIcon sx={{ fontSize: 30, cursor: 'pointer' }} />
+              <SearchIcon className={s.menuIcon} onClick={() => setIsSearchOpen(false)} />
+              <NotificationsIcon className={s.menuIcon} />
               <IconButton
                 color="inherit"
                 aria-label="toggle theme"
@@ -138,7 +138,7 @@ export const Header = () => {
               </IconButton>
             </Box>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <Box className={s.mobileArea}>
             <IconButton size="large" edge="end" color="inherit" aria-label="menu" onClick={handleMenu}>
               <MenuIcon />
             </IconButton>
@@ -156,7 +156,7 @@ export const Header = () => {
               }}
               open={open}
               onClose={handleClose}
-              sx={{ mt: '40px' }}
+              className={s.menuOffset}
             >
               {navLinks.map((link) => (
                 <MenuItem key={link.path} onClick={handleClose} component={Link} to={link.path}>
@@ -170,14 +170,14 @@ export const Header = () => {
                   setIsSearchOpen(false);
                 }}
               >
-                <SearchIcon sx={{ mr: 1 }} /> Search
+                <SearchIcon className={s.menuItemIcon} /> Search
               </MenuItem>
               <MenuItem onClick={handleClose}>
-                <NotificationsIcon sx={{ mr: 1 }} /> Notifications
+                <NotificationsIcon className={s.menuItemIcon} /> Notifications
               </MenuItem>
               <MenuItem onClick={handleClose}>
                 <MyAvatar src={avatarSrc} alt="User Avatar" size={24} />
-                <span style={{ marginLeft: '8px' }}>Profile</span>
+                <span className={s.menuItemText}>Profile</span>
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -186,11 +186,11 @@ export const Header = () => {
                 }}
               >
                 {isDarkTheme ? (
-                  <LightModeIcon sx={{ mr: 1 }} />
+                  <LightModeIcon className={s.menuItemIcon} />
                 ) : (
-                  <Brightness4Icon sx={{ mr: 1 }} />
+                  <Brightness4Icon className={s.menuItemIcon} />
                 )}
-                <span style={{ marginLeft: '8px' }}>Toggle theme</span>
+                <span className={s.menuItemText}>Toggle theme</span>
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -207,7 +207,7 @@ export const Header = () => {
         </Toolbar>
       ) : (
         <Box className={s.searchRowOpen}>
-          <Box sx={{ color: 'red', fontWeight: 700, mr: 2 }}>SEARCH OPEN</Box>
+          <Box className={s.searchDebugLabel}>SEARCH OPEN</Box>
           <div className={s.searchFormWrap}>
             <SearchForm
               value={searchValue}
